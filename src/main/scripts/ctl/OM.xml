@@ -1,0 +1,1025 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ctl:package 
+	xmlns:ctl="http://www.occamlab.com/ctl" 
+	xmlns:parsers="http://www.occamlab.com/te/parsers" 
+	xmlns:ocp="http://www.occamlab.com/te/parsers" 
+	xmlns:tep="http://teamengine.sourceforge.net/parsers" 
+	xmlns:om="http://www.opengis.net/om/2.0"
+	xmlns:swe="http://www.opengis.net/swe/2.0" 
+	xmlns:gml="http://www.opengis.net/gml/3.2" 
+	xmlns:xi="http://www.w3.org/2001/XInclude" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:sam="http://www.opengis.net/sampling/2.0"
+	xmlns:sams="http://www.opengis.net/samplingSpatial/2.0"
+>
+
+	<ctl:suite name="om:suite">
+		<ctl:title>OM 2.0 Compliance Test Suite</ctl:title>
+		<ctl:description>Verifies that an OM 2.0 implementation complies with the Observations and Measurements (OM) Implementation Specification.</ctl:description>
+		<ctl:starting-test>om:Main</ctl:starting-test>
+	</ctl:suite>
+
+	<ctl:test name="om:Main">
+		<ctl:assertion>The schema satisfies all applicable assertions.</ctl:assertion>
+		<ctl:code>
+			<!--
+                1.)  Prompt the user to provide the url for an OM implementation.
+                2.)  Send a request to the provided url to determine if there is a response
+                3.)  If there is a response, then begin executing tests, else fail.
+            -->
+			<ctl:message>**********************************************************************</ctl:message>
+			<ctl:message>Testing started at:  <xsl:value-of select="current-dateTime()" /></ctl:message>
+			<ctl:message>**********************************************************************</ctl:message>
+			<xsl:variable name="form-values">
+				<ctl:form height="700" width="1024">
+					<body>
+						<h2>Compliance Test Suite for Observations and Measurements (OM) 2.0</h2>
+						<p>
+                  Please provide a URL from which a OM document can 
+                  be retrieved. Modify the URL template below to specify the 
+                  location of an OGC OM 2.0 implementation to be tested.
+						</p>
+						<blockquote>
+							<table border="1" padding="4" bgcolor="#99ccff">
+								<tr>
+									<td align="left">
+										<b>OM URL:</b>
+									</td>
+									<td align="center">
+										<input name="service-url" size="128" type="text" value="" />
+									</td>
+								</tr>
+							</table>
+						</blockquote>
+						<input type="submit" value="Start" />
+					</body>
+				</ctl:form>
+			</xsl:variable>
+			<!-- Get user input:  Get the value of the OM URL that the user supplies -->
+			<xsl:variable name="om.get.url" select="$form-values/values/value[@key='service-url']" />
+			<ctl:message>Executing tests on the OM implementation found at the following URL:  <xsl:value-of select="$om.get.url" />
+			</ctl:message>
+			<ctl:call-test name="om:ConformanceValidation">
+				<ctl:with-param name="serviceURL" select="$om.get.url" />
+			</ctl:call-test>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ConformanceValidation">
+		<ctl:param name="serviceURL" />
+		<ctl:assertion>The provided OM complies with the OM 2.0 Implementation Specification.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Executing a request for getting the context of the provided OM from "<xsl:value-of select="$serviceURL" />"</ctl:message>
+			<xsl:variable name="response">
+				<ctl:request>
+					<ctl:url>
+						<xsl:value-of select="$serviceURL" />
+					</ctl:url>
+					<ctl:method>get</ctl:method>
+					<parsers:XMLValidatingParser>
+						<parsers:schemas>
+							<parsers:schema type="resource">xsd\w3c\xml.xsd</parsers:schema>
+							<parsers:schema type="resource">xsd\ogc\om\2.0\observation.xsd</parsers:schema>
+						</parsers:schemas>
+					</parsers:XMLValidatingParser>
+				</ctl:request>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="not($response/*)">
+					<ctl:message>FAILURE: Missing or invalid response entity ( XML schema validate error).</ctl:message>
+					<ctl:fail />
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message select="'******************** ReqA1 ********************'"/>
+					<ctl:call-test name="om:ReqA1">
+						<ctl:with-param name="serviceURL" select="$serviceURL" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA1_2 ********************'"/>
+					<ctl:call-test name="om:ReqA1_2">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					
+					<ctl:message select="'******************** ReqA2 ********************'"/>
+					<ctl:call-test name="om:ReqA2">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA3 ********************'"/>
+					<ctl:call-test name="om:ReqA3">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA4 ********************'"/>
+					<ctl:call-test name="om:ReqA4">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA5 ********************'"/>
+					<ctl:call-test name="om:ReqA5">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA6 ********************'"/>
+					<ctl:call-test name="om:ReqA6">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA7 ********************'"/>
+					<ctl:call-test name="om:ReqA7">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA8 ********************'"/>
+					<ctl:call-test name="om:ReqA8">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA9 ********************'"/>
+					<ctl:call-test name="om:ReqA9">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA10 ********************'"/>
+					<ctl:call-test name="om:ReqA10">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA11 ********************'"/>
+					<ctl:call-test name="om:ReqA11">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					
+					<ctl:message select="'******************** ReqA12 ********************'"/>
+					<ctl:call-test name="om:ReqA12">
+						<ctl:with-param name="serviceURL" select="$serviceURL" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA13 ********************'"/>
+					<ctl:call-test name="om:ReqA13">
+						<ctl:with-param name="serviceURL" select="$serviceURL" />
+					</ctl:call-test>
+
+					<ctl:message select="'******************** ReqA13_2 ********************'"/>
+					<ctl:call-test name="om:ReqA13_2">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA14 ********************'"/>
+					<ctl:call-test name="om:ReqA14">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA15 ********************'"/>
+					<ctl:call-test name="om:ReqA15">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA16 ********************'"/>
+					<ctl:call-test name="om:ReqA16">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+					<ctl:message select="'******************** ReqA17 ********************'"/>
+					<ctl:call-test name="om:ReqA17">
+						<ctl:with-param name="response" select="$response" />
+					</ctl:call-test>
+
+					<ctl:message select="'******************** ReqA18 ********************'"/>
+					<ctl:call-test name="om:ReqA18">
+						<ctl:with-param name="serviceURL" select="$serviceURL" />
+					</ctl:call-test>
+					
+				</xsl:otherwise>
+			</xsl:choose>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA1">
+		<ctl:param name="serviceURL" />
+		<ctl:assertion>Verify that any XML element in the substitution group of om:OM_Observation is well-formed and valid</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the XML schema document http://schemas.opengis.net/om/2.0/observation.xsd.
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<xsl:variable name="response">
+				<ctl:request>
+					<ctl:url>
+						<xsl:value-of select="$serviceURL" />
+					</ctl:url>
+					<ctl:method>get</ctl:method>
+					<parsers:XMLValidatingParser>
+						<parsers:schemas>
+							<parsers:schema type="resource">xsd\ogc\om\2.0\observation.xsd</parsers:schema>
+						</parsers:schemas>
+					</parsers:XMLValidatingParser>
+				</ctl:request>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="not($response/*)">
+					<ctl:message>FAILURE: Missing or invalid response entity ( observation.xsd validate error).</ctl:message>
+					<ctl:fail />
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: no errors reported!</ctl:message>
+				</xsl:otherwise>
+			</xsl:choose>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA1_2">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the content model of any om:result element is consistent with the value of the xlink:href attribute of the
+om:type element if one is present as a sub-element of the parent om:OM_Observation, according to the mapping given in Table 5.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/om/2.0/resultTypeConsistent.sch.
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<ctl:message>pattern : observation-type-measurement</ctl:message> 
+			<xsl:choose>
+				<xsl:when test="count($response//om:OM_Observation/om:type[@xlink:href='http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement']) > 0">
+					<xsl:choose>
+					<xsl:when test="$response//om:result castable as xs:double"> <!-- ERROR => There is no imported schema for namespace http://www.opengis.net/gml/3.2; ($response//om:result/@uom castable as gml:UomSymbol or $response//om:result/@uom castable as gml:UomURI) and -->
+						<ctl:message>PASS: Result model matches gml:MeasureType, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : Result model must match gml:MeasureType!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: the response type is not an OM_Measurement in the response , so pass!</ctl:message> 
+				</xsl:otherwise>
+			</xsl:choose>
+			<ctl:message>pattern : observation-type-category</ctl:message> 
+			<xsl:choose>
+				<xsl:when test="count($response//om:OM_Observation/om:type[@xlink:href='http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_CategoryObservation']) > 0">
+					<xsl:choose>
+					<xsl:when test="( $response//om:result/@xlink:href | $response//om:result/@xlink:title ) and not( $response//om:result/* | $response//om:result/text() )">
+						<ctl:message>PASS: result model matches gml:ReferenceType, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result model must match gml:ReferenceType!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: the response type is not an OM_CategoryObservation in the response , so pass!</ctl:message> 
+				</xsl:otherwise>
+			</xsl:choose>
+			<ctl:message>pattern : observation-type-count</ctl:message> 
+			<xsl:choose>
+				<xsl:when test="count($response//om:OM_Observation/om:type[@xlink:href='http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_CountObservation']) > 0">
+					<xsl:choose>
+					<xsl:when test="$response//om:result castable as xs:integer">
+						<ctl:message>PASS: result type is xs:integer, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result type must be xs:integer!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: the response type is not an OM_CountObservation in the response , so pass!</ctl:message> 
+				</xsl:otherwise>
+			</xsl:choose>
+			<ctl:message>pattern : observation-type-truth</ctl:message> 
+			<xsl:choose>
+				<xsl:when test="count($response//om:OM_Observation/om:type[@xlink:href='http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_TruthObservation']) > 0">
+					<xsl:choose>
+					<xsl:when test="$response//om:result castable as xs:boolean">
+						<ctl:message>PASS: result type is xs:boolean, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result type must be xs:boolean!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: the response type is not an OM_TruthObservation in the response , so pass!</ctl:message> 
+				</xsl:otherwise>
+			</xsl:choose>
+			<ctl:message>pattern : observation-type-complex</ctl:message> 
+			<xsl:choose>
+				<xsl:when test="count($response//om:OM_Observation/om:type[@xlink:href='http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_ComplexObservation']) > 0">
+					<xsl:choose>
+					<xsl:when test="$response//om:result/swe:DataRecord | $response//om:result/swe:Vector">
+						<ctl:message>PASS: result contains an element in the substitution group headed by swe:DataRecord or swe:Vector, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result must contain an element in the substitution group headed by swe:DataRecord or swe:Vector!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: the response type is not an OM_ComplexObservation in the response , so pass!</ctl:message> 
+				</xsl:otherwise>
+			</xsl:choose>
+			<ctl:message>pattern : observation-type-geometry</ctl:message> 
+			<xsl:choose>
+				<xsl:when test="count($response//om:OM_Observation/om:type[@xlink:href='http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_GeometryObservation']) > 0">
+					<xsl:choose>
+					<xsl:when test="$response//om:result/gml:MultiGeometry |
+									$response//om:result/gml:MultiPoint |
+									$response//om:result/gml:MultiCurve |
+									$response//om:result/gml:MultiSurface |
+									$response//om:result/gml:MultiSolid |
+									$response//om:result/gml:Point |
+									$response//om:result/gml:LineString |
+									$response//om:result/gml:CompositeCurve |
+									$response//om:result/gml:Curve |
+									$response//om:result/gml:OrientableCurve |
+									$response//om:result/gml:Polygon |
+									$response//om:result/gml:CompositeSurface |
+									$response//om:result/gml:Surface |
+									$response//om:result/gml:PolyhedralSurface |
+									$response//om:result/gml:TriangulatedSurface |
+									$response//om:result/gml:Tin |
+									$response//om:result/gml:OrientableSurface |
+									$response//om:result/gml:CompositeSolid |
+									$response//om:result/gml:Solid |
+									$response//om:result/gml:GeometricComplex |
+									$response//om:result/gml:Grid |
+									$response//om:result/gml:RectifiedGrid">
+						<ctl:message>PASS: result contains an element in the substitution group headed by gml:AbstractGeometry, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result must contain an element in the substitution group headed by gml:AbstractGeometry!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: the response type is not an OM_GeometryObservation in the response , so pass!</ctl:message> 
+				</xsl:otherwise>
+			</xsl:choose>
+			<ctl:message>pattern : observation-type-temporal</ctl:message> 
+			<xsl:choose>
+				<xsl:when test="count($response//om:OM_Observation/om:type[@xlink:href='http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_TemporalObservation']) > 0">
+					<xsl:choose><!-- there is no function schema-element, so list all type -->
+					<xsl:when test="$response//om:result/TimeInstant | $response//om:result/TimePeriod | $response//om:result/TimeNode | $response//om:result/TimeEdge">
+						<ctl:message>PASS: result contains an element in the substitution group headed by gml:AbstractTimeObject, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result must contain an element in the substitution group headed by gml:AbstractTimeObject!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: the response type is not an OM_TemporalObservation in the response , so pass!</ctl:message> 
+				</xsl:otherwise>
+			</xsl:choose>
+			<ctl:message>pattern : observation-type-swe-simple</ctl:message> 
+			<xsl:choose>
+				<xsl:when test="count($response//om:OM_Observation/om:type[@xlink:href='http://www.opengis.net/def/observationType/OGC-OM/2.0/SWEScalarObservation']) > 0">
+					<xsl:choose> <!-- there is no function schema-element, so list all type -->
+					<xsl:when test="$response//om:result/swe:Count/swe:value | 
+						$response//om:result/swe:CountRange/swe:value | 
+						$response//om:result/swe:Category/swe:value | 
+						$response//om:result/swe:CategoryRange/swe:value | 
+						$response//om:result/swe:Quantity/swe:value | 
+						$response//om:result/swe:QuantityRange/swe:value | 
+						$response//om:result/swe:Time/swe:value | 
+						$response//om:result/swe:TimeRange/swe:value | 
+						$response//om:result/swe:Boolean/swe:value | 
+						$response//om:result/swe:Text/swe:value | 
+						$response//om:result/swe:DataStream/swe:value ">
+						<ctl:message>PASS: result contains an element in the substitution group headed by swe:AbstractSimpleComponent with an inline value, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result must contain an element in the substitution group headed by swe:AbstractSimpleComponent with an inline value!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: the response type is not an SWEScalarObservation in the response , so pass!</ctl:message> 
+				</xsl:otherwise>
+			</xsl:choose>
+			<ctl:message>pattern : observation-type-swe-array</ctl:message> 
+			<xsl:choose>
+				<xsl:when test="count($response//om:OM_Observation/om:type[@xlink:href='http://www.opengis.net/def/observationType/OGC-OM/2.0/SWEArrayObservation']) > 0">
+					<xsl:choose>
+					<xsl:when test="$response//om:result/swe:DataArray/swe:values | $response//om:result/swe:Matrix/swe:values | $response//om:result/swe:DataStream/swe:values">
+						<ctl:message>PASS: result contains an element in the substitution group headed by swe:DataArray, swe:Matrix or swe:DataStream and with inline values, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result must contain an element in the substitution group headed by swe:DataArray, swe:Matrix or swe:DataStream and with inline values!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: the response type is not an SWEArrayObservation in the response , so pass!</ctl:message> 
+				</xsl:otherwise>
+			</xsl:choose>
+		</ctl:code>
+	</ctl:test>
+	
+	<ctl:test name="om:ReqA2">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the XML element om:result has a value that matches
+the content model defined by gml:MeasureType.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/om/2.0/measurement.sch. Pass if no
+errors reported. Fail otherwise.</ctl:message> 
+			<ctl:message>pattern : observation-type-measurement</ctl:message> 
+			<xsl:for-each select="$response//*[om:resultTime]">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element//om:result castable as xs:double"> <!-- ERROR => There is no imported schema for namespace http://www.opengis.net/gml/3.2; ($response//om:result/@uom castable as gml:UomSymbol or $response//om:result/@uom castable as gml:UomURI) and -->
+						<ctl:message>PASS: Result model matches gml:MeasureType, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result model must match gml:MeasureType!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+				
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA3">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the XML element om:result has a value that matches
+the content model defined by gml:ReferenceType</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/om/2.0/categoryObservation.sch.
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<ctl:message>pattern : observation-type-category</ctl:message> 
+			<xsl:for-each select="$response//*[om:resultTime]">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="( $element//om:result/@xlink:href | $element//om:result/@xlink:title ) and not( $element//om:result/* | $element//om:result/text() )">
+						<ctl:message>PASS: result model matches gml:ReferenceType, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result model must match gml:ReferenceType!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA4">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the XML element om:result has a value that matches
+the content model defined by xs:integer.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/om/2.0/countObservation.sch.
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<ctl:message>pattern : observation-type-count</ctl:message> 
+			<xsl:for-each select="$response//*[om:resultTime]">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element//om:result castable as xs:integer">
+						<ctl:message>PASS: result type is xs:integer, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result type must be xs:integer!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA5">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the XML element om:result has a value that matches
+the content model defined by xs:boolean.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/om/2.0/truthObservation.sch. Pass if
+no errors reported. Fail otherwise.</ctl:message> 
+			<ctl:message>pattern : observation-type-truth</ctl:message> 
+			<xsl:for-each select="$response//*[om:resultTime]">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$response//om:result castable as xs:boolean">
+						<ctl:message>PASS: result type is xs:boolean, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result type must be xs:boolean!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA6">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that XML element om:result contains a subelement in
+the substitution group of gml:AbstractGeometry.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/om/2.0/geometryObservation.sch.
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<ctl:message>pattern : observation-type-geometry</ctl:message> 
+			<xsl:for-each select="$response//*[om:resultTime]">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element//om:result/gml:MultiGeometry |
+									$element//om:result/gml:MultiPoint |
+									$element//om:result/gml:MultiCurve |
+									$element//om:result/gml:MultiSurface |
+									$element//om:result/gml:MultiSolid |
+									$element//om:result/gml:Point |
+									$element//om:result/gml:LineString |
+									$element//om:result/gml:CompositeCurve |
+									$element//om:result/gml:Curve |
+									$element//om:result/gml:OrientableCurve |
+									$element//om:result/gml:Polygon |
+									$element//om:result/gml:CompositeSurface |
+									$element//om:result/gml:Surface |
+									$element//om:result/gml:PolyhedralSurface |
+									$element//om:result/gml:TriangulatedSurface |
+									$element//om:result/gml:Tin |
+									$element//om:result/gml:OrientableSurface |
+									$element//om:result/gml:CompositeSolid |
+									$element//om:result/gml:Solid |
+									$element//om:result/gml:GeometricComplex |
+									$element//om:result/gml:Grid |
+									$element//om:result/gml:RectifiedGrid">
+						<ctl:message>PASS: result contains an element in the substitution group headed by gml:AbstractGeometry, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result must contain an element in the substitution group headed by gml:AbstractGeometry!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA7">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that XML element om:result contains a subelement in
+the substitution group of gml:AbstractTimeObject.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/om/2.0/temporalObservation.sch.
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<ctl:message>pattern : observation-type-temporal</ctl:message> 
+			<xsl:for-each select="$response//*[om:resultTime]">
+				<xsl:variable name="element" select="." />
+				<xsl:choose><!-- there is no function schema-element, so list all type -->
+					<xsl:when test="$element//om:result/TimeInstant | $element//om:result/TimePeriod | $element//om:result/TimeNode | $element//om:result/TimeEdge">
+						<ctl:message>PASS: result contains an element in the substitution group headed by gml:AbstractTimeObject, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result must contain an element in the substitution group headed by gml:AbstractTimeObject!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA8">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the XML element om:result contains a subelement
+swe:DataRecord or swe:Vector with inline values.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/om/2.0/complexObservation.sch.
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<ctl:message>pattern : observation-type-complex</ctl:message> 
+			<xsl:for-each select="$response//*[om:resultTime]">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element//om:result/swe:DataRecord | $element//om:result/swe:Vector">
+						<ctl:message>PASS: result contains an element in the substitution group headed by swe:DataRecord or swe:Vector, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result must contain an element in the substitution group headed by swe:DataRecord or swe:Vector!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA9">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the XML element om:result contains a concrete
+subelement in the substitution group
+swe:AbstractScalarComponent containing an inline value..</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/om/2.0/SWEScalarObservation.sch.
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<ctl:message>pattern : observation-type-swe-simple</ctl:message> 
+			<xsl:for-each select="$response//*[om:resultTime]">
+				<xsl:variable name="element" select="." />
+				<xsl:choose> <!-- there is no function schema-element, so list all type -->
+					<xsl:when test="$element//om:result/swe:Count/swe:value | 
+						$element//om:result/swe:CountRange/swe:value | 
+						$element//om:result/swe:Category/swe:value | 
+						$element//om:result/swe:CategoryRange/swe:value | 
+						$element//om:result/swe:Quantity/swe:value | 
+						$element//om:result/swe:QuantityRange/swe:value | 
+						$element//om:result/swe:Time/swe:value | 
+						$element//om:result/swe:TimeRange/swe:value | 
+						$element//om:result/swe:Boolean/swe:value | 
+						$element//om:result/swe:Text/swe:value | 
+						$element//om:result/swe:DataStream/swe:value ">
+						<ctl:message>PASS: result contains an element in the substitution group headed by swe:AbstractSimpleComponent with an inline value, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result must contain an element in the substitution group headed by swe:AbstractSimpleComponent with an inline value!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA10">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the XML element om:result contains a subelement
+swe:DataArray, swe:Matrix or swe:DataStream containing
+inline values.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/om/2.0/SWEArrayObservation.sch.
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<ctl:message>pattern : observation-type-swe-array</ctl:message> 
+			<xsl:for-each select="$response//*[om:resultTime]">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element//om:result/swe:DataArray/swe:values | $element//om:result/swe:Matrix/swe:values | $element//om:result/swe:DataStream/swe:values">
+						<ctl:message>PASS: result contains an element in the substitution group headed by swe:DataArray, swe:Matrix or swe:DataStream and with inline values, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : result must contain an element in the substitution group headed by swe:DataArray, swe:Matrix or swe:DataStream and with inline values!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA11">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the observation has exactly one sampling geometry
+encoded as XML element om:parameter/om:NamedValue in an
+observation, and that its sub-element om:name has an xlink:href
+attribute with the value http://www.opengis.net/def/paramname/
+OGC-OM/2.0/samplingGeometry, and its sub-element
+om:value contains a subelement in the substitution group of
+gml:AbstractGeometry.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/om/2.0/spatialObservation.sch.
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<ctl:message>pattern : 1</ctl:message> 
+			<xsl:for-each select="$response//*[om:resultTime]">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="count ($element//om:parameter/om:NamedValue/om:name[ @xlink:href = 'http://www.opengis.net/req/omxml/2.0/data/samplingGeometry']) = 1">
+						<ctl:message>PASS: the sampling have the value 'http://www.opengis.net/req/omxml/2.0/data/samplingGeometry', so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : Requirement http://www.opengis.net/req/omxml/2.0/data/spatial-parameter : A spatial observation 
+shall have exactly one sampling geometry encoded as XML element om:parameter in an observation. 
+Requirement http://www.opengis.net/req/omxml/2.0/data/spatial-parameter-name: The xlink:href attribute 
+in the XML element om:name of the om:parameter/om:NamedValue element that carries the sampling geometry SHALL 
+have the value 'http://www.opengis.net/req/omxml/2.0/data/samplingGeometry'.</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+			
+			<ctl:message>pattern : 2</ctl:message> 
+			<xsl:for-each select="$response//*[om:resultTime]/om:parameter/om:NamedValue[om:name/@xlink:href= 'http://www.opengis.net/req/omxml/2.0/data/samplingGeometry']/om:value">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element/gml:MultiGeometry |
+									$element/gml:MultiPoint |
+									$element/gml:MultiCurve |
+									$element/gml:MultiSurface |
+									$element/gml:MultiSolid |
+									$element/gml:Point |
+									$element/gml:LineString |
+									$element/gml:CompositeCurve |
+									$element/gml:Curve |
+									$element/gml:OrientableCurve |
+									$element/gml:Polygon |
+									$element/gml:CompositeSurface |
+									$element/gml:Surface |
+									$element/gml:PolyhedralSurface |
+									$element/gml:TriangulatedSurface |
+									$element/gml:Tin |
+									$element/gml:OrientableSurface |
+									$element/gml:CompositeSolid |
+									$element/gml:Solid |
+									$element/gml:GeometricComplex |
+									$element/gml:Grid |
+									$element/gml:RectifiedGrid">
+						<ctl:message>PASS: om:value contains an element in the substitution group headed by gml:AbstractGeometry, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : Requirement http://www.opengis.net/req/omxml/2.0/data/spatial-parameter-value : The XML element om:value 
+in the om:parameter/om:NamedValue element which carries the sampling geometry shall have a value of type gml:AbstractGeometry.</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+	
+	<ctl:test name="om:ReqA12">
+		<ctl:param name="serviceURL" />
+		<ctl:assertion>Verify that any XML element in the substitution group of sam:SF_SamplingFeature is well-formed and valid.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the XML schema document
+http://schemas.opengis.net/sampling/2.0/samplingFeature.xsd.
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<xsl:variable name="response">
+				<ctl:request>
+					<ctl:url>
+						<xsl:value-of select="$serviceURL" />
+					</ctl:url>
+					<ctl:method>get</ctl:method>
+					<parsers:XMLValidatingParser>
+						<parsers:schemas>
+							<parsers:schema type="resource">xsd\ogc\sampling\2.0\samplingFeature.xsd</parsers:schema>
+						</parsers:schemas>
+					</parsers:XMLValidatingParser>
+				</ctl:request>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="not($response/*)">
+					<ctl:message>FAILURE: Missing or invalid response entity ( samplingFeature.xsd validate error).</ctl:message>
+					<ctl:fail />
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: no errors reported!</ctl:message>
+				</xsl:otherwise>
+			</xsl:choose>
+		</ctl:code>
+	</ctl:test>
+	
+	<ctl:test name="om:ReqA13">
+		<ctl:param name="serviceURL" />
+		<ctl:assertion>Verify that any XML element in the substitution group of sams:SF_SpatialSamplingFeature is well-formed and valid.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the XML schema document
+http://schemas.opengis.net/samplingSpatial/2.0/spatialSamplingFeature.xsd.
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<xsl:variable name="response">
+				<ctl:request>
+					<ctl:url>
+						<xsl:value-of select="$serviceURL" />
+					</ctl:url>
+					<ctl:method>get</ctl:method>
+					<parsers:XMLValidatingParser>
+						<parsers:schemas>
+							<parsers:schema type="resource">xsd\ogc\samplingSpatial\2.0\spatialSamplingFeature.xsd</parsers:schema>
+						</parsers:schemas>
+					</parsers:XMLValidatingParser>
+				</ctl:request>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="not($response/*)">
+					<ctl:message>FAILURE: Missing or invalid response entity ( spatialSamplingFeature.xsd validate error).</ctl:message>
+					<ctl:fail />
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: no errors reported!</ctl:message>
+				</xsl:otherwise>
+			</xsl:choose>
+		</ctl:code>
+	</ctl:test>
+	
+	<ctl:test name="om:ReqA13_2">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the content model of any sams:shape element is
+consistent with the value of the xlink:href attribute of the
+sam:type element if one is present as a sub-element of the
+parent sams:SF_SpatialSamplingFeature, according to the
+mapping given in Table 6.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/samplingSpatial/2.0/shapeTypeConsistent.sch.
+Pass if no errors reported. Fail otherwise..</ctl:message> 
+			<ctl:message>pattern : samplingFeature-type-point</ctl:message>
+			<xsl:for-each select="$response//sams:SF_SpatialSamplingFeature[ sam:type/@xlink:href='http://www.opengis.net/def/samplingFeatureType/OGC-OM/2.0/SF_SamplingPoint' ] ">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element/sams:shape/gml:Point | $element/sams:shape/@xlink:href">
+						<ctl:message>PASS: a member of the substitution group headed by gml:Point or an xlink is present as child of sams:shape, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : a member of the substitution group headed by gml:Point or an xlink must be present as child of sams:shape!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+			
+			<ctl:message>pattern : samplingFeature-type-curve</ctl:message> 
+			<xsl:for-each select="$response//sams:SF_SpatialSamplingFeature[ sam:type/@xlink:href='http://www.opengis.net/def/samplingFeatureType/OGC-OM/2.0/SF_SamplingCurve' ] ">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element/sams:shape/gml:LineString | 
+									$element/sams:shape/gml:CompositeCurve | 
+									$element/sams:shape/gml:LineString | 
+									$element/sams:shape/gml:CompositeCurve | 
+									$element/sams:shape/gml:Curve | 
+									$element/sams:shape/gml:OrientableCurve | 
+									$element/sams:shape/@xlink:href">
+						<ctl:message>PASS: a member of the substitution group headed by gml:Curve or an xlink is present as child of sams:shape, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : a member of the substitution group headed by gml:Curve or an xlink must be present as child of sams:shape!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+			
+			<ctl:message>pattern : samplingFeature-type-surface</ctl:message> 
+			<xsl:for-each select="$response//sams:SF_SpatialSamplingFeature[ sam:type/@xlink:href='http://www.opengis.net/def/samplingFeatureType/OGC-OM/2.0/SF_SamplingSurface' ]">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element/sams:shape/gml:Polygon |
+									$element/sams:shape/gml:CompositeSurface | 
+									$element/sams:shape/gml:Surface | 
+									$element/sams:shape/gml:PolyhedralSurface | 
+									$element/sams:shape/gml:TriangulatedSurface | 
+									$element/sams:shape/gml:Tin | 
+									$element/sams:shape/gml:OrientableSurface | 
+									$element/sams:shape/@xlink:href">
+						<ctl:message>PASS: a member of the substitution group headed by gml:AbstractSurface or an xlink is present as child of sams:shape, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : a member of the substitution group headed by gml:AbstractSurface or an xlink must be present as child of sams:shape!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+			
+			<ctl:message>pattern : samplingFeature-type-solid</ctl:message> 
+			<xsl:for-each select="$response//sams:SF_SpatialSamplingFeature[ sam:type/@xlink:href='http://www.opengis.net/def/samplingFeatureType/OGC-OM/2.0/SF_SamplingSolid' ] ">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element/sams:shape/gml:CompositeSolid |
+									$element/sams:shape/gml:Solid | 
+									$element/sams:shape/@xlink:href">
+						<ctl:message>PASS: a member of the substitution group headed by gml:AbstractSolid or an xlink is present as child of sams:shape, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : a member of the substitution group headed by gml:AbstractSolid or an xlink must be present as child of sams:shape!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA14">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that XML element sams:shape contains a subelement in
+the substitution group of gml:Point or a link to a representation
+of a point.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/samplingSpatial/2.0/samplingPoint.sch. 
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<ctl:message>pattern : sampling-type-point</ctl:message>
+			<xsl:for-each select="$response//sams:SF_SpatialSamplingFeature">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element/sams:shape/gml:Point | $element/sams:shape/@xlink:href">
+						<ctl:message>PASS: a member of the substitution group headed by gml:Point or an xlink is present as child of sams:shape, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : a member of the substitution group headed by gml:Point or an xlink must be present as child of sams:shape!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA15">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the XML element sams:shape contains a subelement
+in the substitution group of gml:AbstractCurve or a link to a
+representation of a curve.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/samplingSpatial/2.0/samplingCurve.sch. 
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<xsl:for-each select="$response//sams:SF_SpatialSamplingFeature">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element/sams:shape/gml:LineString | 
+									$element/sams:shape/gml:CompositeCurve | 
+									$element/sams:shape/gml:LineString | 
+									$element/sams:shape/gml:CompositeCurve | 
+									$element/sams:shape/gml:Curve | 
+									$element/sams:shape/gml:OrientableCurve | 
+									$element/sams:shape/@xlink:href">
+						<ctl:message>PASS: a member of the substitution group headed by gml:Curve or an xlink is present as child of sams:shape, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : a member of the substitution group headed by gml:Curve or an xlink must be present as child of sams:shape!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA16">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the XML element sams:shape contains a subelement
+in the substitution group of gml:AbstractSurface or a link to a
+representation of a surface.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/samplingSpatial/2.0/samplingSurface.sch. 
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<xsl:for-each select="$response//sams:SF_SpatialSamplingFeature">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element/sams:shape/gml:Polygon |
+									$element/sams:shape/gml:CompositeSurface | 
+									$element/sams:shape/gml:Surface | 
+									$element/sams:shape/gml:PolyhedralSurface | 
+									$element/sams:shape/gml:TriangulatedSurface | 
+									$element/sams:shape/gml:Tin | 
+									$element/sams:shape/gml:OrientableSurface | 
+									$element/sams:shape/@xlink:href">
+						<ctl:message>PASS: a member of the substitution group headed by gml:AbstractSurface or an xlink is present as child of sams:shape, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : a member of the substitution group headed by gml:AbstractSurface or an xlink must be present as child of sams:shape!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA17">
+		<ctl:param name="response" />
+		<ctl:assertion>Verify that the XML element sams:shape contains a subelement
+in the substitution group of gml:AbstractSolid or a link to a
+representation of a solid.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the Schematron document
+http://schemas.opengis.net/samplingSpatial/2.0/samplingSolid.sch. 
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<xsl:for-each select="$response//sams:SF_SpatialSamplingFeature">
+				<xsl:variable name="element" select="." />
+				<xsl:choose>
+					<xsl:when test="$element/sams:shape/gml:CompositeSolid |
+									$element/sams:shape/gml:Solid | 
+									$element/sams:shape/@xlink:href">
+						<ctl:message>PASS: a member of the substitution group headed by gml:AbstractSolid or an xlink is present as child of sams:shape, so pass!</ctl:message> 
+					</xsl:when>
+					<xsl:otherwise>
+						<ctl:message>FAILURE : a member of the substitution group headed by gml:AbstractSolid or an xlink must be present as child of sams:shape!</ctl:message> 
+						<ctl:fail />
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</ctl:code>
+	</ctl:test>
+
+	<ctl:test name="om:ReqA18">
+		<ctl:param name="serviceURL" />
+		<ctl:assertion>Verify that any XML element in the substitution group of spec:SF_Specimen is well-formed and valid.</ctl:assertion>
+		<ctl:code>
+			<ctl:message>Validate the XML document using the XML Schema document
+http://schemas.opengis.net/samplingSpecimen/2.0/specimen.xsd. 
+Pass if no errors reported. Fail otherwise.</ctl:message> 
+			<xsl:variable name="response">
+				<ctl:request>
+					<ctl:url>
+						<xsl:value-of select="$serviceURL" />
+					</ctl:url>
+					<ctl:method>get</ctl:method>
+					<parsers:XMLValidatingParser>
+						<parsers:schemas>
+							<parsers:schema type="resource">xsd\ogc\samplingSpecimen\2.0\specimen.xsd</parsers:schema>
+						</parsers:schemas>
+					</parsers:XMLValidatingParser>
+				</ctl:request>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="not($response/*)">
+					<ctl:message>FAILURE: Missing or invalid response entity ( specimen.xsd validate error).</ctl:message>
+					<ctl:fail />
+				</xsl:when>
+				<xsl:otherwise>
+					<ctl:message>PASS: no errors reported!</ctl:message>
+				</xsl:otherwise>
+			</xsl:choose>
+		</ctl:code>
+	</ctl:test>
+</ctl:package>
