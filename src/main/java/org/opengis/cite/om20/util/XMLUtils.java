@@ -1,5 +1,8 @@
 package org.opengis.cite.om20.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -7,9 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
+
+import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.events.StartElement;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -284,4 +292,31 @@ public class XMLUtils {
         }
         return resultDoc;
     }
+    
+    public static boolean isXMLSchema(File file) {
+    	  if (!file.exists() || (file.length() == 0)) {
+    	   return false;
+    	  }
+    	  QName docElemName = QName.valueOf("");
+    	  InputStream inStream = null;
+    	  XMLEventReader reader = null;
+    	  try {
+    	   inStream = new FileInputStream(file);
+    	   XMLInputFactory factory = XMLInputFactory.newInstance();
+    	   reader = factory.createXMLEventReader(inStream);
+    	   StartElement docElem = reader.nextTag().asStartElement();
+    	   docElemName = docElem.getName();
+    	  } catch (Exception e1) {
+    	   return false;
+    	  } finally {
+    	   try {
+    	    reader.close();
+    	    inStream.close();
+    	   } catch (Exception e2) {
+    	    TestSuiteLogger.log(Level.INFO, "Error closing resource.", e2);
+    	   }
+    	  }
+    	  return docElemName.getNamespaceURI().equals(
+    	    XMLConstants.W3C_XML_SCHEMA_NS_URI);
+    	 }
 }

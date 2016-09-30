@@ -1,4 +1,4 @@
-__Observations and Measurements (O&M) 2.0 Executable Test Suite__
+__Test suite ets-om20__
 
 Describe purpose of test suite.
 

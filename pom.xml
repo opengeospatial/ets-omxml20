@@ -5,15 +5,15 @@
   <parent>
     <groupId>org.opengis.cite</groupId>
     <artifactId>ets-common</artifactId>
-    <version>2</version>
+    <version>1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.opengis.cite</groupId>
   <artifactId>ets-om20</artifactId>
-  <version>r0-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>Observations and Measurements (O&M) 2.0 Executable Test Suite</name>
+  <name>Test suite ets-om20</name>
   <description>Describe purpose of test suite.</description>
   <url>http://opengeospatial.github.io/ets-om20/</url>
   <licenses>

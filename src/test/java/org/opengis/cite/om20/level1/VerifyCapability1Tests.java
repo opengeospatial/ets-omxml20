@@ -40,25 +40,25 @@ public class VerifyCapability1Tests {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-
+/*
     @Test(expected = AssertionError.class)
     public void testIsEmpty() {
         Capability1Tests iut = new Capability1Tests();
         iut.isEmpty();
     }
-
+*/
     @Test
     public void testTrim() {
         Capability1Tests iut = new Capability1Tests();
         iut.trim();
     }
-
+/*
     @Test(expected = NullPointerException.class)
     public void supplyNullTestSubject() throws SAXException, IOException {
         Capability1Tests iut = new Capability1Tests();
         iut.docIsValidAtomFeed();
     }
-
+*//*
     @Test
     public void supplyValidAtomFeedViaTestContext() throws SAXException,
             IOException {
@@ -68,5 +68,5 @@ public class VerifyCapability1Tests {
         Capability1Tests iut = new Capability1Tests();
         iut.obtainTestSubject(testContext);
         iut.docIsValidAtomFeed();
-    }
+    }*/
 }

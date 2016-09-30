@@ -12,6 +12,7 @@
   <test name="Conformance Level 1">
     <classes>
       <class name="org.opengis.cite.om20.level1.Capability1Tests" />
+      <class name="org.opengis.cite.om20.level1.SchematronTests" />
     </classes>
   </test>
   <test name="Conformance Level 2">

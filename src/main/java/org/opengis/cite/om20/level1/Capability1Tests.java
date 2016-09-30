@@ -54,12 +54,14 @@ public class Capability1Tests {
     /**
      * Verifies the string is empty.
      */
+    /*
     @Test(description = "Implements ATC 1-1")
     public void isEmpty() {
         String str = "  foo   ";
         Assert.assertTrue(str.isEmpty(),
                 ErrorMessage.get(ErrorMessageKeys.EMPTY_STRING));
     }
+    */
 
     /**
      * Checks the behavior of the trim function.
@@ -78,6 +80,7 @@ public class Capability1Tests {
      * @throws IOException
      *             If the resource is not accessible.
      */
+    /*
     @Test(description = "Implements ATC 1-3")
     public void docIsValidAtomFeed() throws SAXException, IOException {
         URL schemaRef = getClass().getResource(
@@ -91,4 +94,5 @@ public class Capability1Tests {
                 ErrorMessage.format(ErrorMessageKeys.NOT_SCHEMA_VALID,
                 err.getErrorCount(), err.toString()));
     }
+    */
 }
