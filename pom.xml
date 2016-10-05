@@ -71,6 +71,11 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
     </dependency>
+    <dependency>
+    	<groupId>com.helger</groupId>
+    	<artifactId>ph-schematron</artifactId>
+    	<version>4.0.0</version>
+    </dependency>
   </dependencies>
 
   <build>
