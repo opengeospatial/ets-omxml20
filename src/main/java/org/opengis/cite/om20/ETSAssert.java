@@ -1,6 +1,8 @@
 package org.opengis.cite.om20;
 
 import java.net.URL;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import javax.xml.namespace.QName;
@@ -15,6 +17,7 @@ import javax.xml.xpath.XPathFactory;
 import org.opengis.cite.om20.util.NamespaceBindings;
 import org.opengis.cite.om20.util.TestSuiteLogger;
 import org.opengis.cite.om20.util.XMLUtils;
+import org.opengis.cite.om20.util.ValidationUtils;
 import org.opengis.cite.validation.SchematronValidator;
 import org.opengis.cite.validation.ValidationErrorHandler;
 import org.testng.Assert;
@@ -142,6 +145,21 @@ public class ETSAssert {
                         XMLUtils.writeNodeToString(result.getNode())));
     }
 
+    public static void assertSchematron(File schFile, File xmlFile) {   	    	
+		try {			
+	        Assert.assertTrue(ValidationUtils.validateXMLViaPureSchematron(schFile, xmlFile), ErrorMessage
+					.format(ErrorMessageKeys.NOT_SCHEMA_VALID, 
+							0, ""));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}   	
+        
+    }
+    
     /**
      * Asserts that the given XML entity contains the expected number of
      * descendant elements having the specified name.

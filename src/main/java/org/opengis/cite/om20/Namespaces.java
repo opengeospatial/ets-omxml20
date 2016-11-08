@@ -20,5 +20,7 @@ public class Namespaces {
     /** ISO 19136 (GML 3.2) */
     public static final String GML = "http://www.opengis.net/gml/3.2";
     public static final String OM="http://www.opengis.net/om/2.0";
+    public static final String SWE="http://www.opengis.net/swe/2.0";
+    public static final String SML="http://www.opengis.net/sensorml/2.0";
     public static final String SCH = "http://purl.oclc.org/dsdl/schematron";
 }

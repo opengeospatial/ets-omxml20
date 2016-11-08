@@ -27,10 +27,10 @@
     <ns
         prefix="xlink"
         uri="http://www.w3.org/1999/xlink"/>
-
+    <!--<xsl:import-schema
+        schema-location="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>-->
     <xsl:import-schema
-        schema-location="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
-
+        schema-location="../../gml/3.2.1/gml.xsd" />
     <pattern
         id="observation-type-geometry">
         <rule

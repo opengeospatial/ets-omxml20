@@ -29,7 +29,7 @@
         uri="http://www.w3.org/1999/xlink"/>
 
     <pattern
-        id="observation-type-category">
+        id="observation-type-category">        
         <rule
             context="//*[om:resultTime]">
             <include

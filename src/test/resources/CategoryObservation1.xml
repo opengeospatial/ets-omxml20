@@ -18,6 +18,11 @@
 	</om:phenomenonTime>
 	<om:resultTime
 		xlink:href="#ot2t"/>
+	<!--<om:resultTime>
+		<gml:TimeInstant gml:id="ot2t-resulttime">
+			<gml:timePosition>2005-01-11T17:22:25.00</gml:timePosition>
+		</gml:TimeInstant>
+	</om:resultTime>-->
 	<om:procedure 
 		xlink:title="Abby Bachrach-Cox"
 		xlink:role="http://sweet.jpl.nasa.gov/2.0/biolAnimal.owl#Human"
@@ -26,7 +31,7 @@
 	<om:observedProperty
 		xlink:href="http://sweet.jpl.nasa.gov/2.0/biol.owl#Species"/>
 	<om:featureOfInterest
-		xlink:href="http://wfs.example.org?request=getFeature&amp;featureid=fruit37f "/>
+		xlink:href="http://wfs.example.org?request=getFeature&amp;featureid=fruit37f "/>	
 	<om:result
 		xsi:type="gml:ReferenceType"
 		xlink:title="Banana"

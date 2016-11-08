@@ -37,7 +37,7 @@ public class SuiteFixtureListener implements ISuiteListener {
 
 	@Override
 	public void onStart(ISuite suite) {
-		processSuiteParameters(suite);
+		//processSuiteParameters(suite);
 		processIUTParameter(suite);
 		processXmlReference(suite);
 		processSchematronSchema(suite);
@@ -105,7 +105,8 @@ public class SuiteFixtureListener implements ISuiteListener {
 		}
 		File xmlFile = null;
 		try {
-			xmlFile = URIUtils.resolveURIAsFile(URI.create(xmlURI));
+			URI uriXml = URI.create(xmlURI);
+			xmlFile = URIUtils.resolveURIAsFile(uriXml);
 			if (null == xmlFile || !xmlFile.exists()) {
 				throw new IllegalArgumentException("Failed to dereference URI: " + xmlURI);
 			}
@@ -118,7 +119,8 @@ public class SuiteFixtureListener implements ISuiteListener {
 
 				Document iutDoc = null;
 				try {
-					iutDoc = URIUtils.parseURI(xmlFile.toURI());
+					//iutDoc = URIUtils.parseURI(xmlFile.toURI());
+					iutDoc = URIUtils.parseURI(uriXml);
 				} catch (Exception x) {
 					throw new RuntimeException("Failed to parse resource retrieved from " + xmlURI, x);
 				}

@@ -48,6 +48,7 @@
   <properties>
     <ets-code>om20</ets-code>
     <spec-version>1.0</spec-version>
+    <slf4jVersion>1.6.1</slf4jVersion>
   </properties>
 
   <dependencies>
@@ -76,6 +77,21 @@
     	<artifactId>ph-schematron</artifactId>
     	<version>4.0.0</version>
     </dependency>
+    <dependency>
+    	<groupId>commons-io</groupId>
+    	<artifactId>commons-io</artifactId>
+    	<version>2.5</version>
+    </dependency>
+    <dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+		<version>${slf4jVersion}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-simple</artifactId>
+		<version>${slf4jVersion}</version>
+	</dependency>
   </dependencies>
 
   <build>

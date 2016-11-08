@@ -14,6 +14,7 @@ import org.opengis.cite.om20.Namespaces;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
+import org.w3c.dom.Document;
 
 /**
  * A supporting base class that provides a common fixture for validating data
@@ -26,7 +27,7 @@ public class DataFixture {
      * A File containing GML data.
      */
     protected File dataFile;
-
+    protected Document testSubject;
     /**
      * An XSModel object representing a GML application schema.
      */
@@ -62,6 +63,12 @@ public class DataFixture {
                 SuiteAttribute.XML.getName());
         this.model = (XSModel) testContext.getSuite().getAttribute(
                 SuiteAttribute.XSMODEL.getName());
+        
+        Object obj = testContext.getSuite().getAttribute(
+                SuiteAttribute.TEST_SUBJECT.getName());
+        if ((null != obj) && Document.class.isAssignableFrom(obj.getClass())) {
+            this.testSubject = Document.class.cast(obj);
+        }
     }
 
     /**

@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 import javax.xml.namespace.NamespaceContext;
 import org.opengis.cite.om20.Namespaces;
+import org.w3c.dom.Document;
 
 /**
  * Provides namespace bindings for evaluating XPath 1.0 expressions using the
@@ -16,6 +17,8 @@ public class NamespaceBindings implements NamespaceContext {
 
     private Map<String, String> bindings = new HashMap<String, String>();
 
+    
+    
     @Override
     public String getNamespaceURI(String prefix) {
         String nsName = null;
@@ -94,6 +97,8 @@ public class NamespaceBindings implements NamespaceContext {
         nsBindings.addNamespaceBinding(Namespaces.OWS, "ows");
         nsBindings.addNamespaceBinding(Namespaces.XLINK, "xlink");
         nsBindings.addNamespaceBinding(Namespaces.GML, "gml");
+        nsBindings.addNamespaceBinding(Namespaces.OM, "om");
+        nsBindings.addNamespaceBinding(Namespaces.SWE, "swe");
         return nsBindings;
     }
 

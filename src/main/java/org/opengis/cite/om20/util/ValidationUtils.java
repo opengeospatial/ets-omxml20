@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 
+import javax.annotation.Nonnull;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -20,6 +21,9 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import org.apache.xerces.util.XMLCatalogResolver;
 import org.opengis.cite.validation.SchematronValidator;
+
+import com.helger.schematron.ISchematronResource;
+import com.helger.schematron.pure.SchematronResourcePure;
 
 /**
  * A utility class that provides convenience methods to support schema
@@ -135,4 +139,14 @@ public class ValidationUtils {
         }
         return schemaURIs;
     }
+    
+    public static boolean validateXMLViaPureSchematron (@Nonnull final File aSchematronFile, @Nonnull final File aXMLFile) throws Exception
+    {
+      final ISchematronResource aResPure = SchematronResourcePure.fromFile (aSchematronFile);
+      if (!aResPure.isValidSchematron ())
+        throw new IllegalArgumentException ("Invalid Schematron!");
+      return aResPure.getSchematronValidity(new StreamSource(aXMLFile)).isValid ();
+    }
+    
+    
 }
