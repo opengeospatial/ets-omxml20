@@ -201,9 +201,9 @@ public class SchematronTests extends DataFixture {
 	@Test(description = "Checks categoryObservation Schematron rules")
 	public void checkCategoryObservation() throws XPathExpressionException, XPathFactoryConfigurationException {
 		//System.out.println(xpathToBoolean("//*[om:resultTime]/(om:result/@xlink:href | om:result/@xlink:title ) and not(om:result/* | om:result/text())"));
-		System.out.println(xpathToBoolean("//*[om:resultTime]/om:result/boolean(@xlink:href)"));
-		//URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/categoryObservation.sch");	
-		//this.validate(schRef);
+		//System.out.println(xpathToBoolean("//*[om:resultTime]/om:result/boolean(@xlink:href)"));
+		URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/categoryObservation.sch");	
+		this.validate(schRef);
 	}
 	
 	public boolean xpathHasNodes(String strXPath) throws XPathExpressionException{
@@ -293,8 +293,10 @@ public class SchematronTests extends DataFixture {
 		try {
 			schFile = URIUtils.resolveURIAsFile(URI.create(schematronRef.toString()));
 			ETSAssert.assertSchematron(schFile, this.dataFile);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			
+			System.out.println("BINGO:" + e.toString());
 			e.printStackTrace();
 		}
 	}

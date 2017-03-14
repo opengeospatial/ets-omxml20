@@ -147,14 +147,18 @@ public class ETSAssert {
 
     public static void assertSchematron(File schFile, File xmlFile) {   	    	
 		try {			
-	        Assert.assertTrue(ValidationUtils.validateXMLViaPureSchematron(schFile, xmlFile), ErrorMessage
-					.format(ErrorMessageKeys.NOT_SCHEMA_VALID, 
-							0, ""));
+			boolean isValid = ValidationUtils.validateXMLViaPureSchematron(schFile, xmlFile);
+			System.out.println("Schematron is valid? " + isValid);
+//	        Assert.assertTrue(ValidationUtils.validateXMLViaPureSchematron(schFile, xmlFile), ErrorMessage
+//					.format(ErrorMessageKeys.NOT_SCHEMA_VALID, 
+//							0, ""));
+			Assert.assertTrue(isValid, "HELLO");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			System.out.println("error in assertSchematron:" + e.toString());
 			e.printStackTrace();
 		}   	
         
