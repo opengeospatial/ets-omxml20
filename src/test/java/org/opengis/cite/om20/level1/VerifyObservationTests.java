@@ -14,17 +14,17 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 /**
- * Verifies the behavior of the Capability1Tests test class. Test stubs replace
+ * Verifies the behavior of the ObservationTests test class. Test stubs replace
  * fixture constituents where appropriate.
  */
-public class VerifyCapability1Tests {
+public class VerifyObservationTests {
 
     private static final String SUBJ = "testSubject";
     private static DocumentBuilder docBuilder;
     private static ITestContext testContext;
     private static ISuite suite;
 
-    public VerifyCapability1Tests() {
+    public VerifyObservationTests() {
     }
 
     @BeforeClass
@@ -43,19 +43,19 @@ public class VerifyCapability1Tests {
 /*
     @Test(expected = AssertionError.class)
     public void testIsEmpty() {
-        Capability1Tests iut = new Capability1Tests();
+        ObservationTests iut = new ObservationTests();
         iut.isEmpty();
     }
 */
     @Test
     public void testTrim() {
-        Capability1Tests iut = new Capability1Tests();
-        iut.trim();
+        ObservationTests iut = new ObservationTests();
+        iut.Observation();
     }
 /*
     @Test(expected = NullPointerException.class)
     public void supplyNullTestSubject() throws SAXException, IOException {
-        Capability1Tests iut = new Capability1Tests();
+        ObservationTests iut = new ObservationTests();
         iut.docIsValidAtomFeed();
     }
 *//*
@@ -65,7 +65,7 @@ public class VerifyCapability1Tests {
         Document doc = docBuilder.parse(this.getClass().getResourceAsStream(
                 "/atom-feed.xml"));
         when(suite.getAttribute(SUBJ)).thenReturn(doc);
-        Capability1Tests iut = new Capability1Tests();
+        ObservationTests iut = new ObservationTests();
         iut.obtainTestSubject(testContext);
         iut.docIsValidAtomFeed();
     }*/

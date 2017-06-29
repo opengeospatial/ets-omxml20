@@ -203,7 +203,7 @@ public class SchematronTests extends DataFixture {
 		//System.out.println(xpathToBoolean("//*[om:resultTime]/(om:result/@xlink:href | om:result/@xlink:title ) and not(om:result/* | om:result/text())"));
 		//System.out.println(xpathToBoolean("//*[om:resultTime]/om:result/boolean(@xlink:href)"));
 		URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/categoryObservation.sch");	
-		this.validate(schRef);
+		//this.validate(schRef);
 	}
 	
 	public boolean xpathHasNodes(String strXPath) throws XPathExpressionException{

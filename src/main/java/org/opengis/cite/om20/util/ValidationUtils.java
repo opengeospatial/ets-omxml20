@@ -19,8 +19,16 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+
 import org.apache.xerces.util.XMLCatalogResolver;
+import org.opengis.cite.om20.util.TestSuiteLogger;
+import org.opengis.cite.om20.util.ValidationUtils;
+import org.opengis.cite.om20.Namespaces;
 import org.opengis.cite.validation.SchematronValidator;
+import org.opengis.cite.validation.XmlSchemaCompiler;
+import org.w3c.dom.ls.LSResourceResolver;
+import org.xml.sax.SAXException;
 
 import com.helger.schematron.ISchematronResource;
 import com.helger.schematron.pure.SchematronResourcePure;
@@ -31,15 +39,60 @@ import com.helger.schematron.pure.SchematronResourcePure;
  */
 public class ValidationUtils {
 
-    private static final XMLCatalogResolver SCH_RESOLVER = initCatalogResolver();
-
+	public static final String ROOT_PKG = "/org/opengis/cite/om20/";
+	private static final XMLCatalogResolver SCH_RESOLVER = initCatalogResolver();
     private static XMLCatalogResolver initCatalogResolver() {
-        URL catalogURL = ValidationUtils.class
-                .getResource("/org/opengis/cite/om20/schematron-catalog.xml");
+        return (XMLCatalogResolver) createSchemaResolver(Namespaces.SCH);
+    }
+    //private static final XMLCatalogResolver SCH_RESOLVER = initCatalogResolver();
+
+    public static Schema CreateSchema(String name , String path)
+    {
+    	String filePath = "http://schemas.opengis.net/om/2.0/";
+    	
+    	if(path != null )
+    	{
+    		filePath = path;
+    	}
+    	filePath += name ;
+    	
+        URL entityCatalog = ValidationUtils.class.getResource(ROOT_PKG + "schema-catalog.xml");
+        XmlSchemaCompiler xsdCompiler = new XmlSchemaCompiler(entityCatalog);
+        Schema schema = null;
+        try {
+            //URL schemaURL = ValidationUtils.class.getResource(ROOT_PKG + "xsd/ogc/sensorml20/0.3/" + name );
+            Source xsdSource = new StreamSource(filePath);
+            
+            //Source xsdSource = new StreamSource(schemaURL.toString());
+            
+            schema = xsdCompiler.compileXmlSchema(new Source[] { xsdSource });
+        } catch (SAXException e) {
+            TestSuiteLogger.log(Level.WARNING,"Failed to create Core Schema object.", e);
+        }
+        return schema;   	
+    }
+    
+    public static LSResourceResolver createSchemaResolver(URI schemaLanguage) {
+        String catalogFileName;
+        if (schemaLanguage.equals(Namespaces.XSD)) {
+            catalogFileName = "schema-catalog.xml";
+        } else {
+            catalogFileName = "schematron-catalog.xml";
+        }
+        URL catalogURL = ValidationUtils.class.getResource(ROOT_PKG
+                + catalogFileName);
         XMLCatalogResolver resolver = new XMLCatalogResolver();
         resolver.setCatalogList(new String[] { catalogURL.toString() });
         return resolver;
     }
+    
+//    private static XMLCatalogResolver initCatalogResolver() {
+//        URL catalogURL = ValidationUtils.class
+//                .getResource(ROOT_PKG + "schematron-catalog.xml");
+//        XMLCatalogResolver resolver = new XMLCatalogResolver();
+//        resolver.setCatalogList(new String[] { catalogURL.toString() });
+//        return resolver;
+//    }
 
     /**
      * Constructs a SchematronValidator that will check an XML resource against

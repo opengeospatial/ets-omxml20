@@ -1,6 +1,7 @@
 package org.opengis.cite.om20.level1;
 
 import java.io.File;
+import java.net.URI;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -27,7 +28,10 @@ public class DataFixture {
      * A File containing GML data.
      */
     protected File dataFile;
+    protected Document originalSubject;
     protected Document testSubject;
+    protected URI testSubjectUri;
+    
     /**
      * An XSModel object representing a GML application schema.
      */
@@ -35,7 +39,32 @@ public class DataFixture {
 
     public DataFixture() {
     }
-
+    
+    @BeforeClass(alwaysRun = true)
+    public void obtainTestSubject(ITestContext testContext){
+    	Assert.assertTrue(
+                testContext.getSuite().getAttributeNames()
+                        .contains(SuiteAttribute.XML.getName()),
+                "No data to validate.");
+        this.dataFile = (File) testContext.getSuite().getAttribute(
+                SuiteAttribute.XML.getName());
+        this.model = (XSModel) testContext.getSuite().getAttribute(
+                SuiteAttribute.XSMODEL.getName());
+        
+        Object obj = testContext.getSuite().getAttribute(
+                SuiteAttribute.TEST_SUBJECT.getName());
+        if ((null != obj) && Document.class.isAssignableFrom(obj.getClass())) {
+            this.testSubject = Document.class.cast(obj);
+            originalSubject = Document.class.cast(obj);
+        }
+        
+        Object uriObj = testContext.getSuite().getAttribute(
+                SuiteAttribute.TEST_SUBJECT_URI.getName());
+        if ((null != uriObj)){        	
+            this.testSubjectUri = URI.class.cast(uriObj);
+            //System.out.println(this.testSubjectUri.toString());        	
+        }
+    }
     /**
      * A configuration method ({@code BeforeClass}) that initializes the test
      * fixture as follows:
@@ -53,23 +82,23 @@ public class DataFixture {
      * @param testContext
      *            The test (group) context.
      */
-    @BeforeClass(alwaysRun = true)
-    public void initDataFixture(ITestContext testContext) {
-        Assert.assertTrue(
-                testContext.getSuite().getAttributeNames()
-                        .contains(SuiteAttribute.XML.getName()),
-                "No GML data to validate.");
-        this.dataFile = (File) testContext.getSuite().getAttribute(
-                SuiteAttribute.XML.getName());
-        this.model = (XSModel) testContext.getSuite().getAttribute(
-                SuiteAttribute.XSMODEL.getName());
-        
-        Object obj = testContext.getSuite().getAttribute(
-                SuiteAttribute.TEST_SUBJECT.getName());
-        if ((null != obj) && Document.class.isAssignableFrom(obj.getClass())) {
-            this.testSubject = Document.class.cast(obj);
-        }
-    }
+//    @BeforeClass(alwaysRun = true)
+//    public void initDataFixture(ITestContext testContext) {
+//        Assert.assertTrue(
+//                testContext.getSuite().getAttributeNames()
+//                        .contains(SuiteAttribute.XML.getName()),
+//                "No data to validate.");
+//        this.dataFile = (File) testContext.getSuite().getAttribute(
+//                SuiteAttribute.XML.getName());
+//        this.model = (XSModel) testContext.getSuite().getAttribute(
+//                SuiteAttribute.XSMODEL.getName());
+//        
+//        Object obj = testContext.getSuite().getAttribute(
+//                SuiteAttribute.TEST_SUBJECT.getName());
+//        if ((null != obj) && Document.class.isAssignableFrom(obj.getClass())) {
+//            this.testSubject = Document.class.cast(obj);
+//        }
+//    }
 
     /**
      * Sets the data file. This is a convenience method intended to facilitate

@@ -12,11 +12,15 @@
     <system systemId="http://www.w3.org/1999/xlink.xsd" uri="./xsd/w3c/2008/06/xlink.xsd" />
     <uri name="http://www.w3.org/XML/1998/namespace" uri="./xsd/w3c/2009/01/xml.xsd" />
     <uri name="http://www.w3.org/1999/xlink" uri="./xsd/w3c/2008/06/xlink.xsd" />
+    <!-- <uri name="http://www.w3.org/2001/XMLSchema" uri="./xsd/w3c/2009/01/xml.xsd" /> -->
   </group>
   <group id="opengis.net">
     <system systemId="http://schemas.opengis.net/gml/3.2.1/gml.xsd"
       uri="./xsd/opengis/gml/3.2.1/gml-3.2.1.xsd" />
-    <uri name="http://www.opengis.net/gml/3.2" uri="./xsd/opengis/gml/3.2.1/gml-3.2.1.xsd" />
+    <!-- <system systemId="http://schemas.opengis.net/om/2.0/observation.xsd"
+      uri="./xsd/opengis/om/2.0/observation.xsd" /> -->
+    <uri name="http://www.opengis.net/gml/3.2" uri="./xsd/opengis/gml/3.2.1/gml-3.2.1.xsd" />    
+    <!-- <uri name="http://www.opengis.net/om/2.0" uri="./xsd/opengis/om/2.0/observation.xsd" /> -->
   </group>
   <group id="isotc211.org">
     <system systemId="http://schemas.opengis.net/iso/19139/20070417/gmd/gmd.xsd"

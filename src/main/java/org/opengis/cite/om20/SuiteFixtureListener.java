@@ -12,6 +12,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.stream.StreamSource;
 
 import org.opengis.cite.om20.util.XMLUtils;
+import org.opengis.cite.om20.SuiteAttribute;
 import org.opengis.cite.om20.util.TestSuiteLogger;
 import org.opengis.cite.om20.util.URIUtils;
 import org.opengis.cite.om20.util.ValidationUtils;
@@ -126,6 +127,7 @@ public class SuiteFixtureListener implements ISuiteListener {
 				}
 				suite.setAttribute(SuiteAttribute.TEST_SUBJECT.getName(), iutDoc);
 				TestSuiteLogger.log(Level.FINE, "Wrote XML document to " + xmlFile.getAbsolutePath());
+				suite.setAttribute(SuiteAttribute.TEST_SUBJECT_URI.getName(), URI.create(xmlURI));
 			}
 		} catch (IOException iox) {
 			throw new RuntimeException("Failed to read resource obtained from " + xmlURI, iox);
