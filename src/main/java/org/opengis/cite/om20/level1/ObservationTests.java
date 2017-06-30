@@ -91,13 +91,13 @@ public class ObservationTests extends DataFixture {
         */
     	
     	XdmValue xdmValue = null;
-        String xpath = "//om:OM_Observation/om:type";
+        String xpath = "//om:OM_Observation/om:type/@xlink:href";
         try {
         	xdmValue = XMLUtils.evaluateXPath2(new DOMSource(this.testSubject), xpath, NamespaceBindings.getStandardBindings());
         } catch (SaxonApiException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        //TODO: the value of xlink must match one of the type URI of observations
         Assert.assertTrue(xdmValue.size() > 0, ErrorMessage.format(ErrorMessageKeys.XPATH_RESULT,
                 this.testSubject.getDocumentElement().getNodeName(), xpath));
     }
