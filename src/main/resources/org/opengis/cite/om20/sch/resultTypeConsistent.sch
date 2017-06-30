@@ -31,12 +31,12 @@
         prefix="xlink"
         uri="http://www.w3.org/1999/xlink"/>
 
-    <xsl:import-schema
+    <!--<xsl:import-schema
         schema-location="http://schemas.opengis.net/om/2.0/observation.xsd"/>
     <xsl:import-schema
         schema-location="http://schemas.opengis.net/sweCommon/2.0/swe.xsd"/>
     <xsl:import-schema
-        schema-location="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+        schema-location="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>-->
 
     <pattern
         id="observation-type-measurement">

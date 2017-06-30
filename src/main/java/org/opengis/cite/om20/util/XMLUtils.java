@@ -2,9 +2,14 @@ package org.opengis.cite.om20.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +24,13 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.events.StartElement;
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
@@ -318,5 +326,54 @@ public class XMLUtils {
     	  }
     	  return docElemName.getNamespaceURI().equals(
     	    XMLConstants.W3C_XML_SCHEMA_NS_URI);
-    	 }
+    }
+    
+    /**
+     * Writes the result of a transformation to a String. An XML declaration is
+     * always omitted.
+     * 
+     * @param result
+     *            An object (DOMResult or StreamResult) that holds the result of
+     *            a transformation, which may be XML or plain text.
+     * @return A String representing the content of the result; it may be empty
+     *         if the content could not be read.
+     */
+    public static String resultToString(Result result) {
+        if (null == result) {
+            throw new IllegalArgumentException("Result is null.");
+        }
+        StringWriter writer = new StringWriter();
+        if (result instanceof DOMResult) {
+            Node node = DOMResult.class.cast(result).getNode();
+            Properties outProps = new Properties();
+            outProps.setProperty(OutputKeys.ENCODING, "UTF-8");
+            outProps.setProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            outProps.setProperty(OutputKeys.INDENT, "yes");
+            Transformer idTransformer;
+            try {
+                idTransformer = TransformerFactory.newInstance().newTransformer();
+                idTransformer.setOutputProperties(outProps);
+                idTransformer.transform(new DOMSource(node), new StreamResult(writer));
+            } catch (TransformerFactoryConfigurationError | TransformerException e) {
+            	TestSuiteLogger.log(Level.WARNING, e.getMessage());
+            }
+        } else if (result instanceof StreamResult) {
+            StreamResult streamResult = StreamResult.class.cast(result);
+            OutputStream os = streamResult.getOutputStream();
+            if (null != os) {
+                writer.write(os.toString()); // probably ByteArrayOutputStream
+            } else { // try system id or writer
+                Path path = Paths.get(URI.create(streamResult.getSystemId()));
+                try {
+                    byte[] data = Files.readAllBytes(path);
+                    writer.write(new String(data));
+                } catch (IOException e) {
+                	TestSuiteLogger.log(Level.WARNING, e.getMessage());
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("Unsupported Result type:" + result.getClass());
+        }
+        return writer.toString();
+    }
 }

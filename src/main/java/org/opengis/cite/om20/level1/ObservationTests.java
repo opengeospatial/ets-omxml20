@@ -3,21 +3,31 @@ package org.opengis.cite.om20.level1;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.XMLConstants;
+import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import org.opengis.cite.om20.ErrorMessage;
 import org.opengis.cite.om20.ErrorMessageKeys;
 import org.opengis.cite.om20.SuiteAttribute;
+import org.opengis.cite.om20.util.NamespaceBindings;
 import org.opengis.cite.om20.util.ValidationUtils;
+import org.opengis.cite.om20.util.XMLUtils;
+import org.opengis.cite.om20.Namespaces;
 import org.opengis.cite.om20.ETSAssert;
 import org.opengis.cite.validation.RelaxNGValidator;
+import org.opengis.cite.validation.SchematronValidator;
 import org.opengis.cite.validation.ValidationErrorHandler;
 import org.opengis.cite.validation.XmlSchemaCompiler;
 import org.testng.Assert;
@@ -26,13 +36,19 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import net.sf.saxon.s9api.SaxonApiException;
+import net.sf.saxon.s9api.XdmValue;
 /**
  * Includes various tests of capability 1.
  */
 public class ObservationTests extends DataFixture {
 
-
+	static final String BASIC_RESULT_TYPE_PHASE = "BasicResultTypePhase";
+    private static final String SCHEMATRON_METADATA = "resultTypeConsistent.sch";
 	
     /**
      * Checks the behavior of the trim function.
@@ -63,6 +79,27 @@ public class ObservationTests extends DataFixture {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+    @Test(description="A.1 The content model of any om:result element SHALL be consistent with the value of the xlink:href attribute of the om:type element if one is present as a sub-element of the parent om:OM_Observation")
+    public void ResultTypeConsistent(){
+    	/** using built-in schematron validator **/
+    	/*
+    	SchematronValidator validator = ValidationUtils.buildSchematronValidator(SCHEMATRON_METADATA, BASIC_RESULT_TYPE_PHASE);
+        Result result = validator.validate(new DOMSource(this.testSubject, this.testSubject.getDocumentURI()));
+        Assert.assertFalse(validator.ruleViolationsDetected(), ErrorMessage.format(ErrorMessageKeys.NOT_SCHEMA_VALID,
+                validator.getRuleViolationCount(), XMLUtils.resultToString(result)));
+        */
+    	
+    	XdmValue xdmValue = null;
+        String xpath = "//om:OM_Observation/om:type";
+        try {
+        	xdmValue = XMLUtils.evaluateXPath2(new DOMSource(this.testSubject), xpath, NamespaceBindings.getStandardBindings());
+        } catch (SaxonApiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        Assert.assertTrue(xdmValue.size() > 0, ErrorMessage.format(ErrorMessageKeys.XPATH_RESULT,
+                this.testSubject.getDocumentElement().getNodeName(), xpath));
     }
 
     /**
