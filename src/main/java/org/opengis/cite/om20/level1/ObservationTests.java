@@ -53,7 +53,7 @@ public class ObservationTests extends DataFixture {
     /**
      * Checks the behavior of the trim function.
      */
-    @Test(description = "A.1 Generic observation data. Verify that any XML element in the substitution group of om:OM_Observation is well-formed and valid ", priority=1)
+    @Test(groups  = "observation", priority=1, description = "A.1 Generic observation data. Verify that any XML element in the substitution group of om:OM_Observation is well-formed and valid ")
     public void Observation() {    	
 		try {
 			// load a remote OM schema, represented by a Schema instance
@@ -80,7 +80,7 @@ public class ObservationTests extends DataFixture {
 			e.printStackTrace();
 		}
     }
-    @Test(description="A.1 The content model of any om:result element SHALL be consistent with the value of the xlink:href attribute of the om:type element if one is present as a sub-element of the parent om:OM_Observation")
+    @Test(groups  = "observation", description="A.1 The content model of any om:result element SHALL be consistent with the value of the xlink:href attribute of the om:type element if one is present as a sub-element of the parent om:OM_Observation")
     public void ResultTypeConsistent(){
     	/** using built-in schematron validator **/
     	/*
