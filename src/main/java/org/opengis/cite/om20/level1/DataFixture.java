@@ -25,13 +25,15 @@ import org.w3c.dom.Document;
 public class DataFixture {
 
     /**
-     * A File containing GML data.
+     * Files containing tested subject.
      */
     protected File dataFile;
     protected Document originalSubject;
     protected Document testSubject;
     protected URI testSubjectUri;
     
+    protected String Resource_GML_Path = "/org/opengis/cite/om20/xsd/opengis/gml/3.2.1/gml-3.2.1.xsd";
+    protected String Resource_SWE_Path = "/org/opengis/cite/sweCommon/2.0/swe_2.0.1_flatten/swe_2.0.1.xsd";
     /**
      * An XSModel object representing a GML application schema.
      */
