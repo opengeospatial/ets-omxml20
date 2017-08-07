@@ -24,7 +24,9 @@ public class Namespaces {
     public static final String OM="http://www.opengis.net/om/2.0";
     public static final String SWE="http://www.opengis.net/swe/2.0";
     public static final String SML="http://www.opengis.net/sensorml/2.0";
-    //public static final String SCH = "http://purl.oclc.org/dsdl/schematron";
+    public static final String SAMS="http://www.opengis.net/samplingSpatial/2.0";
+    public static final String SAM="http://www.opengis.net/sampling/2.0";
+    public static final String SPEC="http://www.opengis.net/samplingSpecimen/2.0";
     
     public static final URI XSD = URI
             .create("http://www.w3.org/2001/XMLSchema");

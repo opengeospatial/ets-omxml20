@@ -151,60 +151,60 @@ public class SchematronTests extends DataFixture {
 	 * </ul>
 	 */
 
-	@Test(description = "Checks general Schematron rules specified in ISO 19136")
-	public void checkGMLSchematronConstraints() {
-		URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/gml-3.2.1.sch");
-		//ETSAssert.assertSchematron(schRef, this.dataFile);
-	}
-
-	// A.1
-	/**
-	 * Verify that any XML element in the substitution group of
-	 * om:OM_Observation is well-formed and valid
-	 */
-	@Test(description = "Checks Observation XSD")
-	public void checkObservation() {
-		URL schRef = this.getClass().getResource("/org/opengis/cite/om20/xsd/opengis/om/2.0/observation.xsd");
-		//ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
-	}
-
-	/**
-	 * Verify that the content model of any om:result element is consistent with
-	 * the value of the xlink:href attribute of the om:type element if one is
-	 * present as a sub-element of the parent om:OM_Observation, according to
-	 * the mapping given in Table 5.
-	 */
-	@Test(description = "Checks resultTypeConsistent Schematron")
-	public void checkResultTypeConsistent() {
-		URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/resultTypeConsistent.sch");
-		//ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
-	}
-
-	// A.2
-	/**
-	 * Verify that the XML element om:result has a value that matches the
-	 * content model defined by gml:MeasureType
-	 */
-	@Test(description = "Checks measurement Schematron")
-	public void checkMeasurement() {
-		URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/measurement.sch");
-		//ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
-	}
-
-	// A.3
-	/**
-	 * Verify that the XML element om:result has a value that matches the
-	 * content model defined by gml:ReferenceType
-	 * @throws XPathExpressionException 
-	 * @throws XPathFactoryConfigurationException 
-	 */
-	@Test(description = "Checks categoryObservation Schematron rules")
-	public void checkCategoryObservation() throws XPathExpressionException, XPathFactoryConfigurationException {
-		//System.out.println(xpathToBoolean("//*[om:resultTime]/(om:result/@xlink:href | om:result/@xlink:title ) and not(om:result/* | om:result/text())"));
-		//System.out.println(xpathToBoolean("//*[om:resultTime]/om:result/boolean(@xlink:href)"));
-		URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/categoryObservation.sch");	
-		//this.validate(schRef);
-	}
+//	@Test(description = "Checks general Schematron rules specified in ISO 19136")
+//	public void checkGMLSchematronConstraints() {
+//		URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/gml-3.2.1.sch");
+//		//ETSAssert.assertSchematron(schRef, this.dataFile);
+//	}
+//
+//	// A.1
+//	/**
+//	 * Verify that any XML element in the substitution group of
+//	 * om:OM_Observation is well-formed and valid
+//	 */
+//	@Test(description = "Checks Observation XSD")
+//	public void checkObservation() {
+//		URL schRef = this.getClass().getResource("/org/opengis/cite/om20/xsd/opengis/om/2.0/observation.xsd");
+//		//ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
+//	}
+//
+//	/**
+//	 * Verify that the content model of any om:result element is consistent with
+//	 * the value of the xlink:href attribute of the om:type element if one is
+//	 * present as a sub-element of the parent om:OM_Observation, according to
+//	 * the mapping given in Table 5.
+//	 */
+//	@Test(description = "Checks resultTypeConsistent Schematron")
+//	public void checkResultTypeConsistent() {
+//		URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/resultTypeConsistent.sch");
+//		//ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
+//	}
+//
+//	// A.2
+//	/**
+//	 * Verify that the XML element om:result has a value that matches the
+//	 * content model defined by gml:MeasureType
+//	 */
+//	@Test(description = "Checks measurement Schematron")
+//	public void checkMeasurement() {
+//		URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/measurement.sch");
+//		//ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
+//	}
+//
+//	// A.3
+//	/**
+//	 * Verify that the XML element om:result has a value that matches the
+//	 * content model defined by gml:ReferenceType
+//	 * @throws XPathExpressionException 
+//	 * @throws XPathFactoryConfigurationException 
+//	 */
+//	@Test(description = "Checks categoryObservation Schematron rules")
+//	public void checkCategoryObservation() throws XPathExpressionException, XPathFactoryConfigurationException {
+//		//System.out.println(xpathToBoolean("//*[om:resultTime]/(om:result/@xlink:href | om:result/@xlink:title ) and not(om:result/* | om:result/text())"));
+//		//System.out.println(xpathToBoolean("//*[om:resultTime]/om:result/boolean(@xlink:href)"));
+//		URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/categoryObservation.sch");	
+//		//this.validate(schRef);
+//	}
 	
 	public boolean xpathHasNodes(String strXPath) throws XPathExpressionException{
 		XPathFactory xPathFactory = XPathFactory.newInstance();	
@@ -272,21 +272,21 @@ public class SchematronTests extends DataFixture {
 	 * Verify that the XML element om:result has a value that matches the
 	 * content model defined by xs:integer.
 	 */
-	@Test(description = "Checks countObservation Schematron rules")
-	public void checkCountObservation() {
-		//URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/countObservation.sch");
-		//validate(schRef);
-//		File schFile;
-//		try {
-//			schFile = URIUtils.resolveURIAsFile(URI.create(schRef.toString()));
-//			ETSAssert.assertSchematron(schFile, this.dataFile);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		//ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
-		
-	}
+//	@Test(description = "Checks countObservation Schematron rules")
+//	public void checkCountObservation() {
+//		//URL schRef = this.getClass().getResource("/org/opengis/cite/om20/sch/countObservation.sch");
+//		//validate(schRef);
+////		File schFile;
+////		try {
+////			schFile = URIUtils.resolveURIAsFile(URI.create(schRef.toString()));
+////			ETSAssert.assertSchematron(schFile, this.dataFile);
+////		} catch (IOException e) {
+////			// TODO Auto-generated catch block
+////			e.printStackTrace();
+////		}
+//		//ETSAssert.assertSchematronValid(schRef, new StreamSource(this.dataFile));
+//		
+//	}
 	
 	void validate(URL schematronRef){
 		File schFile;

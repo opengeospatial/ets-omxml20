@@ -105,6 +105,9 @@ public class NamespaceBindings implements NamespaceContext {
         nsBindings.put(Namespaces.GML, "gml");
         nsBindings.put(Namespaces.OM, "om");
         nsBindings.put(Namespaces.SWE, "swe");
+        nsBindings.put(Namespaces.SAMS, "sams");
+        nsBindings.put(Namespaces.SAM, "sam");
+        nsBindings.put(Namespaces.SPEC, "spec");
         return nsBindings;
     }
 
