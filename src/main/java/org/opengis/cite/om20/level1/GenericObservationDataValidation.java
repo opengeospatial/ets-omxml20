@@ -518,9 +518,11 @@ public class GenericObservationDataValidation extends DataFixture {
 	/**
 	 * Create Validator for checking XML file against XML Schema file
 	 * 
-	 * @throws XMLStreamException
-	 * @throws IOException
-	 * @throws SAXException
+	 * @param xsdPath URL path of the XSD file
+	 * @return schema validator
+	 * @throws XMLStreamException XMLStreamException
+	 * @throws IOException IOException
+	 * @throws SAXException SAX Error
 	 */
 	public Validator CreateValidator(URL xsdPath) throws XMLStreamException, SAXException, IOException {
 		Schema schema;
@@ -547,7 +549,7 @@ public class GenericObservationDataValidation extends DataFixture {
 	 * @return An XdmValue object representing a value in the XDM data model;
 	 *         this is a sequence of zero or more items, where each item is
 	 *         either an atomic value or a node.
-	 * @throws SaxonApiException
+	 * @throws SaxonApiException SaxonApiException
 	 */
 	public static XdmValue evaluateXPath2Modified(File xmlFile, String expr, Map<String, String> nsBindings)
 			throws SaxonApiException {
@@ -605,7 +607,7 @@ public class GenericObservationDataValidation extends DataFixture {
 	 * @param schemaFile
 	 *            the location of schema used for testing
 	 * @return return string value "true" or "false"
-	 * @throws SaxonApiException
+	 * @throws SaxonApiException SaxonApiException
 	 */
 	public String SchemaElement(String candidateNode, String nodeName, File schemaFile) throws SaxonApiException {
 		// ---Test condition 1--- candidateNode matches the nodeName, or matches
@@ -766,8 +768,10 @@ public class GenericObservationDataValidation extends DataFixture {
 	 * 
 	 * @param xsdPath
 	 *            A URL that denotes the location of a XML schema.
-	 * @throws URISyntaxException
-	 * @throws IOException
+	 * @throws SAXException SAXException
+	 * @throws URISyntaxException URISyntaxException
+	 * @throws IOException IOException
+	 * @return schema validator
 	 */
 	public Validator CreateValidatorFromXSD(URL xsdPath) throws SAXException, IOException, URISyntaxException {
 		XmlSchemaCompiler compiler = new XmlSchemaCompiler(xsdPath);
