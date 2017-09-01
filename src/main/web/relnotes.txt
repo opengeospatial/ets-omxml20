@@ -1,6 +1,0 @@
-<h3>Release Notes</h3>
-
-<h2>r0</h2>
-<ul>
-   <li>First release - basic test against schema.</li>
-</ul>
