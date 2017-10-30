@@ -13,6 +13,9 @@
         <local-name>ets-om20-${version}</local-name>
         <title>Test suite ets-om20</title>
         <description>Describe scope of testing.</description>
+        <BasicConformanceClasses>
+		  <conformanceClass>org.opengis.cite.om20.level1.GenericObservationDataValidation</conformanceClass>
+		</BasicConformanceClasses>
       </suite>
       <revision>
         <name>${version}</name>

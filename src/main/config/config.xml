@@ -12,6 +12,9 @@
         <local-name>suite</local-name>
         <title>om 2.0.0 Conformance Test Suite</title>
         <description>Checks om instances for conformance to OGC 10-025r1 .</description>
+        <BasicConformanceClasses>
+		  <conformanceClass>org.opengis.cite.om20.level1.GenericObservationDataValidation</conformanceClass>
+		</BasicConformanceClasses>
       </suite>
       <revision>
         <name>r0</name>
