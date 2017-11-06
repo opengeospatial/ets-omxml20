@@ -8,3 +8,5 @@
 ## 1.1
   * [#2](https://github.com/opengeospatial/ets-om20/issues/2) Release notes are missing on project website
   * Add conformance class configuration in config.xml
+  * [#3](https://github.com/opengeospatial/ets-om20/issues/3) Improve name of test suite.
+  * [#4](https://github.com/opengeospatial/ets-om20/issues/4) Rename ctl artifact created during built
