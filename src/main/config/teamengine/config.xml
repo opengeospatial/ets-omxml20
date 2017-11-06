@@ -4,14 +4,14 @@
 <organization>
   <name>OGC</name>
   <standard>
-    <name>Test suite ets-om20</name>
+    <name>Observations and Measurements (OM)</name>
     <version>
       <name>${spec-version}</name>
       <suite>
         <namespace-uri>http://www.opengis.net/cite/om20</namespace-uri>
         <prefix>tns</prefix>
         <local-name>ets-om20-${version}</local-name>
-        <title>Test suite ets-om20</title>
+        <title>Observations and Measurements (OM)</title>
         <description>Describe scope of testing.</description>
         <BasicConformanceClasses>
 		  <conformanceClass>org.opengis.cite.om20.level1.GenericObservationDataValidation</conformanceClass>

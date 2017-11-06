@@ -12,7 +12,7 @@
   <version>1.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>Test suite ets-om20</name>
+  <name>Observations and Measurements (OM)</name>
   <description>Describe purpose of test suite.</description>
   <url>http://opengeospatial.github.io/ets-om20/</url>
   <licenses>
@@ -51,7 +51,7 @@
 
   <properties>
     <ets-code>om20</ets-code>
-    <spec-version>1.0</spec-version>
+    <spec-version>2.0</spec-version>
      <slf4jVersion>1.6.1</slf4jVersion> 
   </properties>
 
