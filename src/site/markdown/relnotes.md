@@ -10,3 +10,6 @@
   * Add conformance class configuration in config.xml
   * [#3](https://github.com/opengeospatial/ets-om20/issues/3) Improve name of test suite.
   * [#4](https://github.com/opengeospatial/ets-om20/issues/4) Rename ctl artifact created during built
+
+## 1.2
+  * [#6](https://github.com/opengeospatial/ets-om20/issues/6) Add conformance class configuration into the ets-om20 test
