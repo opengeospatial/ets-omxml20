@@ -28,17 +28,15 @@
 	  <ctl:code>
         <xsl:variable name="form-data">
            <ctl:form method="POST" width="800" height="600" xmlns="http://www.w3.org/1999/xhtml">
-             <h2>Test suite ets-om20</h2>
+             <h2>O&M 2.0 Conformance Test suite</h2>
              <div style="background:#F0F8FF" bgcolor="#F0F8FF">
-               <p>The implementation under test (IUT) is checked against the following specifications:</p>
+               <p>The O&M 2.0 implementation under test (IUT) is checked against the following specifications:</p>
                <ul>
-                 <li><a href="http://www.w3.org/TR/xml/">Extensible Markup Language (XML) 1.0</a>, 
-				 Fifth Edition</li>
-				 <li><a href="http://www.w3.org/TR/xmlbase/">XML Base</a>, Second Edition</li>
+                 <li><a href="http://portal.opengeospatial.org/files/?artifact_id=41510">Observations and Measurements - XML Implementation, Version 2.0</a></li>
                </ul>
                <p>Two conformance levels are defined:</p>
                <ul>
-                 <li>Level 1</li>
+                 <li>Level 1 (Basic Conformance Class)</li>
                  <li>Level 2</li>
                </ul>
              </div>
@@ -61,7 +59,7 @@
                <p>
                  <label for="level">Conformance class: </label>
                  <input id="level-1" type="radio" name="level" value="1" checked="checked" />
-                 <label for="level-1"> Level 1 | </label>
+                 <label for="level-1"> Level 1 (Basic Conformance Class)| </label>
                  <input id="level-2" type="radio" name="level" value="2" />
                  <label class="form-label" for="level-2"> Level 2</label>
                </p>
