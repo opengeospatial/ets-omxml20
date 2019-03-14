@@ -831,6 +831,7 @@ public class GenericObservationDataValidation extends DataFixture {
 				|| CheckXPath2(context.concat("/om:result/@xlink:title")).contains("XdmEmptySequence")) {
 			test1 = false;
 		}
+		//the result cannot have any child element nor text
 		if (CheckXPath2(context.concat("/om:result/*")).contains("XdmEmptySequence")
 				&& CheckXPath2(context.concat("/om:result/text()")).contains("XdmEmptySequence")) {
 			test2 = true;
