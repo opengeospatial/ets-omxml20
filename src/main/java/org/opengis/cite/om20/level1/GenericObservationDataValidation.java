@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -73,16 +75,20 @@ public class GenericObservationDataValidation extends DataFixture {
 		if (hasResultTime.equals("false"))
 			throw new SkipException("Not measurement data.");
 		
-		String href = GetResultTypeHref();
-		// Only check those match to the type definition
-		if (!href.equals(this.observation_type_measurement)) {
+		List<String> href = GetResultTypeHref();
+		if (!href.contains(this.observation_type_measurement)) {
 			throw new SkipException("Not measurement data.");
 		}
 		
 		try {
-			String result = CheckObservationTypeMeasurement(this.observation_type_measurement);
-			Assert.assertTrue(result.equals("true"),
-					"XML element om:result has a value that matches the content model defined by gml:MeasureType.");
+			List<String> results = CheckObservationTypeMeasurement(this.observation_type_measurement);
+			if (results.contains("false")) {
+				Assert.assertTrue(false,
+						"XML element om:result has a value that matches the content model defined by gml:MeasureType.");
+			}else {
+				Assert.assertTrue(true,
+						"XML element om:result has a value that matches the content model defined by gml:MeasureType.");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -95,16 +101,20 @@ public class GenericObservationDataValidation extends DataFixture {
 		if (hasResultTime.equals("false"))
 			throw new SkipException("Not category observation.");
 		
-		String href = GetResultTypeHref();
-		// Only check those match to the type definition
-		if (!href.equals(this.observation_type_category)) {
-			throw new SkipException("Not category observation.");
+		List<String> href = GetResultTypeHref();
+		if (!href.contains(this.observation_type_category)) {
+			throw new SkipException("Not category data.");
 		}
 		
 		try {
-			String result = this.CheckObservationTypeCategory(this.observation_type_category);
-			Assert.assertTrue(result.equals("true"),
-					"element om:result has a value that matches the content model defined by gml:ReferenceType.");
+			List<String> results = CheckObservationTypeCategory(this.observation_type_category);
+			if (results.contains("false")) {
+				Assert.assertTrue(false,
+						"element om:result has a value that matches the content model defined by gml:ReferenceType.");
+			}else {
+				Assert.assertTrue(true,
+						"element om:result has a value that matches the content model defined by gml:ReferenceType.");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,18 +125,22 @@ public class GenericObservationDataValidation extends DataFixture {
 		//must has resultTime element
 		String hasResultTime = this.CheckXPath2("boolean(//om:resultTime)");
 		if (hasResultTime.equals("false"))
-			throw new SkipException("Not category observation.");
-		
-		String href = GetResultTypeHref();
-		// Only check those match to the type definition
-		if (!href.equals(this.observation_type_count)) {
 			throw new SkipException("Not count observation.");
+		
+		List<String> href = GetResultTypeHref();
+		if (!href.contains(this.observation_type_count)) {
+			throw new SkipException("Not count data.");
 		}
 		
 		try {
-			String result = this.CheckObservationTypeCount(this.observation_type_count);
-			Assert.assertTrue(result.equals("true"),
-					"element om:result has a value that matches the content model defined by xs:integer.");
+			List<String> results = this.CheckObservationTypeCount(this.observation_type_count);
+			if (results.contains("false")) {
+				Assert.assertTrue(false,
+						"element om:result has a value that matches the content model defined by xs:integer.");
+			}else {
+				Assert.assertTrue(true,
+						"element om:result has a value that matches the content model defined by xs:integer.");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -139,16 +153,20 @@ public class GenericObservationDataValidation extends DataFixture {
 		if (hasResultTime.equals("false"))
 			throw new SkipException("Not truth observation.");
 		
-		String href = GetResultTypeHref();
-		// Only check those match to the type definition
-		if (!href.equals(this.observation_type_truth)) {
-			throw new SkipException("Not truth observation.");
-		}
+		List<String> href = GetResultTypeHref();
+		if (!href.contains(this.observation_type_truth)) {
+			throw new SkipException("Not truth data.");
+		}		
 		
 		try {
-			String result = this.CheckObservationTypeTruth(this.observation_type_truth);
-			Assert.assertTrue(result.equals("true"),
-					"element om:result has a value that matches the content model defined by xs:boolean.");
+			List<String> results = this.CheckObservationTypeTruth(this.observation_type_truth);
+			if (results.contains("false")) {
+				Assert.assertTrue(false,
+						"element om:result has a value that matches the content model defined by xs:boolean.");
+			}else {
+				Assert.assertTrue(true,
+						"element om:result has a value that matches the content model defined by xs:boolean.");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -160,11 +178,12 @@ public class GenericObservationDataValidation extends DataFixture {
 	 */
 	@Test(groups = "A.6. Geometry observation data", description = "Validate the XML document using the Schematron document http://schemas.opengis.net/om/2.0/geometryObservation.sch")
 	public void ResultGeometry() {
-		String href = GetResultTypeHref();
-		// Only check those match to the type definition
-		if (!href.equals(this.observation_type_geometry)) {
-			throw new SkipException("Not geometry observations.");
+		
+		List<String> href = GetResultTypeHref();
+		if (!href.contains(this.observation_type_geometry)) {
+			throw new SkipException("Not geometry data.");
 		}
+		
 		String candidateNode = CheckXPath2("//om:result/*[1]/name()");
 		String nodeName = "gml:AbstractGeometry";
 
@@ -178,8 +197,13 @@ public class GenericObservationDataValidation extends DataFixture {
 		}
 	}
 
-	private String GetResultTypeHref() {
-		return CheckXPath2("string(//om:OM_Observation/om:type/@xlink:href)");
+	private List<String> GetResultTypeHref() {
+		int count_observation = Integer.parseInt((CheckXPath2("count(//om:OM_Observation/om:type/@xlink:href)")));
+		List<String> list_href = new ArrayList<String>();
+		for (int i=1; i <= count_observation; i++ ) {
+			list_href.add(CheckXPath2(String.format("string((//om:OM_Observation/om:type/@xlink:href)[%s])", i)));
+		}
+		return list_href;
 	}
 
 	/**
@@ -188,11 +212,12 @@ public class GenericObservationDataValidation extends DataFixture {
 	 */
 	@Test(groups = "A.7. Temporal observation data", description = "Validate the XML document using the Schematron document http://schemas.opengis.net/om/2.0/temporalObservation.sch")
 	public void ResultTimeObject() {
-		String href = GetResultTypeHref();
-		// Only check those match to the type definition
-		if (!href.equals(this.observation_type_temporal)) {
-			throw new SkipException("Not temporal observations.");
+		
+		List<String> href = GetResultTypeHref();
+		if (!href.contains(this.observation_type_temporal)) {
+			throw new SkipException("Not temporal data.");
 		}
+		
 		String candidateNode = CheckXPath2("//om:result/*[1]/name()");
 		String nodeName = "gml:AbstractTimeObject";
 
@@ -212,11 +237,12 @@ public class GenericObservationDataValidation extends DataFixture {
 	 */
 	@Test(groups = "A.8. Complex observation data", description = "Validate the XML document using the Schematron document http://schemas.opengis.net/om/2.0/complexObservation.sch.")
 	public void ResultSWErecord() {
-		String href = GetResultTypeHref();
-		// Only check those match to the type definition
-		if (!href.equals(this.observation_type_complex)) {
-			throw new SkipException("Not complex observations.");
+		
+		List<String> href = GetResultTypeHref();
+		if (!href.contains(this.observation_type_complex)) {
+			throw new SkipException("Not complex data.");
 		}
+		
 		String candidateNode = CheckXPath2("//om:result/*[1]/name()");
 		String nodeName_1 = "swe:DataRecord";
 		String nodeName_2 = "swe:Vector";
@@ -246,10 +272,10 @@ public class GenericObservationDataValidation extends DataFixture {
 	 */
 	@Test(groups = "A.9. SWE scalar observation data", description = "Validate the XML document using the Schematron document http://schemas.opengis.net/om/2.0/SWEScalarObservation.sch")
 	public void ResultSWEscalar() {
-		String href = GetResultTypeHref();
-		// Only check those match to the type definition
-		if (!href.equals(this.observation_type_swe_simple)) {
-			throw new SkipException("Not temporal observations.");
+		
+		List<String> href = GetResultTypeHref();
+		if (!href.contains(this.observation_type_swe_simple)) {
+			throw new SkipException("Not SWE scalar observation.");
 		}
 
 		String candidateNode = CheckXPath2("//om:result/*[1]/name()");
@@ -279,12 +305,12 @@ public class GenericObservationDataValidation extends DataFixture {
 	 */
 	@Test(groups = "A.10. SWE array observation data", description = "Validate the XML document using the Schematron document http://schemas.opengis.net/om/2.0/SWEArrayObservation.sch")
 	public void ResultSWEBlock() {
-		String href = GetResultTypeHref();
-		// Only check those match to the type definition
-		if (!href.equals(this.observation_type_swe_array)) {
-			throw new SkipException("Not temporal observations.");
-		}
 
+		List<String> href = GetResultTypeHref();
+		if (!href.contains(this.observation_type_swe_array)) {
+			throw new SkipException("Not SWE array observation.");
+		}
+		
 		String candidateNode = CheckXPath2("//om:result/*[1]/name()");
 		String nodeName_1 = "swe:DataArray";
 		String nodeName_2 = "swe:Matrix";
@@ -793,7 +819,7 @@ public class GenericObservationDataValidation extends DataFixture {
 					NamespaceBindings.getStandardBindings());
 		} catch (SaxonApiException e) {
 			e.printStackTrace();
-		}
+		};
 		return xdmValue.toString();
 	}
 
@@ -803,16 +829,22 @@ public class GenericObservationDataValidation extends DataFixture {
 	 * 
 	 * @param href
 	 *            the value of om:type/xlink:href to make the context
-	 * @return return string value "true" or "false"
+	 * @return return list of values containing "true" or "false"
 	 */
-	public String CheckObservationTypeMeasurement(String href) {
+	public List<String> CheckObservationTypeMeasurement(String href) {
+		List<String> results = new ArrayList<String>();
 		String context = String.format("//om:OM_Observation[om:type/@xlink:href='%s']", href);
-		String uom_value = context.concat("/om:result/@uom");
-		String result_text = context.concat("/om:result/text()");
-		String xpath = String.format(
-				"(((%s castable as xs:string) and (string-length(%s) > 0) and (not(matches(%s, \"[: \\n\\r\\t]+\"))))  or ((%s castable as xs:anyURI) and matches(%s , \"([a-zA-Z][a-zA-Z0-9\\-\\+\\.]*:|\\.\\./|\\./|#).*\"))) and (%s castable as xs:double)",
-				uom_value, uom_value, uom_value, uom_value, uom_value, result_text);
-		return CheckXPath2(xpath);
+	
+		int count_observation = Integer.parseInt((CheckXPath2(String.format("count(%s)", context))));
+		for (int i = 1; i <= count_observation; i++) {
+			String uom_value = String.format("(%s/om:result/@uom)[%s]", context,i);
+			String result_text = String.format("(%s/om:result/text())[%s]", context,i);
+			String xpath = String.format(
+					"(((%s castable as xs:string) and (string-length(%s) > 0) and (not(matches(%s, \"[: \\n\\r\\t]+\"))))  or ((%s castable as xs:anyURI) and matches(%s , \"([a-zA-Z][a-zA-Z0-9\\-\\+\\.]*:|\\.\\./|\\./|#).*\"))) and (%s castable as xs:double)",
+					uom_value, uom_value, uom_value, uom_value, uom_value, result_text);
+			results.add(CheckXPath2(xpath));
+		}
+		return results;
 	}
 
 	/**
@@ -821,26 +853,34 @@ public class GenericObservationDataValidation extends DataFixture {
 	 * 
 	 * @param href
 	 *            the value of om:type/xlink:href to make the context
-	 * @return return string value "true" or "false"
+	 * @return return list of values containing "true" or "false"
 	 */
-	public String CheckObservationTypeCategory(String href) {
+	public List<String> CheckObservationTypeCategory(String href) {
+		List<String> results = new ArrayList<String>();	
 		String context = String.format("//om:OM_Observation[om:type/@xlink:href='%s']", href);
-		boolean test1 = true;
-		boolean test2 = false;
-		if (CheckXPath2(context.concat("/om:result/@xlink:href")).contains("XdmEmptySequence")
-				|| CheckXPath2(context.concat("/om:result/@xlink:title")).contains("XdmEmptySequence")) {
-			test1 = false;
+		int count_observation = Integer.parseInt((CheckXPath2(String.format("count(%s)", context))));
+		
+		for (int i = 1; i <= count_observation; i++) {
+			boolean test1 = true;
+			boolean test2 = false;
+			
+			if (CheckXPath2(String.format("(%s/om:result/@xlink:href)[%s]", context, i)).contains("XdmEmptySequence")
+					|| CheckXPath2(String.format("(%s/om:result/@xlink:title)[%s]", context, i)).contains("XdmEmptySequence")) {
+				test1 = false;
+			}
+			//the result cannot have any child element nor text
+			
+			if (CheckXPath2(String.format("(%s/om:result/*)[%s]", context, i)).contains("XdmEmptySequence")
+					&& CheckXPath2(String.format("(%s/om:result/text())[%s]", context, i)).contains("XdmEmptySequence")) {
+				test2 = true;
+			}
+			if (test1 && test2) {
+				results.add("true");
+			} else {
+				results.add("false");
+			}
 		}
-		//the result cannot have any child element nor text
-		if (CheckXPath2(context.concat("/om:result/*")).contains("XdmEmptySequence")
-				&& CheckXPath2(context.concat("/om:result/text()")).contains("XdmEmptySequence")) {
-			test2 = true;
-		}
-		if (test1 && test2) {
-			return "true";
-		} else {
-			return "false";
-		}
+		return results;
 	}
 
 	/**
@@ -849,11 +889,16 @@ public class GenericObservationDataValidation extends DataFixture {
 	 * 
 	 * @param href
 	 *            the value of om:type/xlink:href to make the context
-	 * @return return string value "true" or "false"
+	 * @return return list of values containing "true" or "false"
 	 */
-	public String CheckObservationTypeCount(String href) {
+	public List<String> CheckObservationTypeCount(String href) {
+		List<String> results = new ArrayList<String>();
 		String context = String.format("//om:OM_Observation[om:type/@xlink:href='%s']", href);
-		return CheckXPath2(context.concat("/om:result/text() castable as xs:integer"));
+		int count_observation = Integer.parseInt((CheckXPath2(String.format("count(%s)", context))));
+		for (int i = 1; i <= count_observation; i++) {
+			results.add(CheckXPath2(String.format("(%s/om:result/text())[%s] castable as xs:integer)", context, i)));
+		}
+		return results;
 	}
 
 	/**
@@ -862,11 +907,16 @@ public class GenericObservationDataValidation extends DataFixture {
 	 * 
 	 * @param href
 	 *            the value of om:type/xlink:href to make the context
-	 * @return return string value "true" or "false"
+	 * @return return list of values containing "true" or "false"
 	 */
-	public String CheckObservationTypeTruth(String href) {
+	public List<String> CheckObservationTypeTruth(String href) {
+		List<String> results = new ArrayList<String>();
 		String context = String.format("//om:OM_Observation[om:type/@xlink:href='%s']", href);
-		return CheckXPath2(context.concat("/om:result/text() castable as xs:boolean"));
+		int count_observation = Integer.parseInt((CheckXPath2(String.format("count(%s)", context))));
+		for (int i = 1; i<= count_observation; i++) {
+			results.add(CheckXPath2(String.format("(%s/om:result/text())[%s] castable as xs:boolean", context, i)));
+		}
+		return results;
 	}
 
 }
