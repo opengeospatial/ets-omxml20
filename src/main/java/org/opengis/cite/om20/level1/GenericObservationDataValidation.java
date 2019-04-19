@@ -1,10 +1,14 @@
 package org.opengis.cite.om20.level1;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -536,9 +540,28 @@ public class GenericObservationDataValidation extends DataFixture {
 	}
 
 	private File GetFileViaResourcePath(String resourcePath) {
-		URL xsdPath = this.getClass().getResource(resourcePath);
-		File file = new File(xsdPath.toString().substring(5));
-		return file;
+		try {
+        InputStream in = this.getClass().getResourceAsStream(resourcePath);
+        if (in == null) {
+            return null;
+        }
+
+        File tempFile = File.createTempFile(String.valueOf(in.hashCode()), ".tmp");
+        tempFile.deleteOnExit();
+
+        try (FileOutputStream out = new FileOutputStream(tempFile)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
+        }
+        return tempFile;
+    } catch (IOException e) {
+			URL xsdPath = this.getClass().getResource(resourcePath);
+			File file = new File(xsdPath.toString().substring(5));
+			return file;
+    }
 	}
 
 	/**
