@@ -7,7 +7,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ets-om20</artifactId>
-  <version>0.3-SNAPSHOT</version>
+  <version>0.3</version>
   <packaging>jar</packaging>
 
   <name>Observations and Measurements (OM)</name>
@@ -28,7 +28,7 @@
     <connection>scm:git:https://github.com/opengeospatial/ets-om20.git</connection>
     <developerConnection>scm:git:git@github.com:opengeospatial/ets-om20.git</developerConnection>
     <url>https://github.com/opengeospatial/ets-om20</url>
-    <tag>HEAD</tag>
+    <tag>0.3</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issue Tracker</system>
