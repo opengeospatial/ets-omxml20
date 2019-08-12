@@ -42,32 +42,32 @@ import net.sf.saxon.s9api.DocumentBuilder;
 /**
  * Includes various tests of capability 1.
  */
-public class GenericObservationDataValidation extends DataFixture {
-
+public class GeometryObservationValidation extends DataFixture {
+	
 	/**
-	 * A.1 Generic observation data. Verify that any XML element in the
-	 * substitution group of om:OM_Observation is well-formed and valid
+	 * A.6 Geometry observation data. Verify that XML element om:result contains
+	 * a sub-element in the substitution group of gml:AbstractGeometry
 	 */
-	@Test(groups = "A.1. Generic observation data - by various Schema References", description = "Validate the XML document using the XML schema document observation.xsd")
-	public void ObservationValidation() {
-		URL entityCatalog = this.getClass().getResource("/org/opengis/cite/om20/xsd/opengis/om/2.0/observation.xsd");
-		Source source = new DOMSource(this.testSubject);
-		Validator validator;
+	@Test(groups = "A.6. Geometry observation data", description = "Validate the XML document using the Schematron document http://schemas.opengis.net/om/2.0/geometryObservation.sch")
+	public void ResultGeometry() {
+		
+		List<String> href = GetResultTypeHref();
+		if (!href.contains(this.observation_type_geometry)) {
+			throw new SkipException("Not geometry data.");
+		}
+		
+		String candidateNode = CheckXPath2("//om:result/*[1]/name()");
+		String nodeName = "gml:AbstractGeometry";
+
 		try {
-			validator = CreateValidator(entityCatalog);
-			ETSAssert.assertSchemaValid(validator, source);
-		} catch (XMLStreamException | SAXException | IOException e) {
-			// TODO Auto-generated catch block
+			File schemaFile = GetFileViaResourcePath(this.Resource_GML_Path);
+			String result = SchemaElement(candidateNode, nodeName, schemaFile);
+			Assert.assertTrue(result.equals("true"),
+					"XML element om:result must contains a sub-element in the substitution group of gml:AbstractGeometry.");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}	
 
-	
-
-	
-
-	
-
-	
 
 }

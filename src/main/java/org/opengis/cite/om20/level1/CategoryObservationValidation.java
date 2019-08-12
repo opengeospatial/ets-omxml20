@@ -42,32 +42,33 @@ import net.sf.saxon.s9api.DocumentBuilder;
 /**
  * Includes various tests of capability 1.
  */
-public class GenericObservationDataValidation extends DataFixture {
-
-	/**
-	 * A.1 Generic observation data. Verify that any XML element in the
-	 * substitution group of om:OM_Observation is well-formed and valid
-	 */
-	@Test(groups = "A.1. Generic observation data - by various Schema References", description = "Validate the XML document using the XML schema document observation.xsd")
-	public void ObservationValidation() {
-		URL entityCatalog = this.getClass().getResource("/org/opengis/cite/om20/xsd/opengis/om/2.0/observation.xsd");
-		Source source = new DOMSource(this.testSubject);
-		Validator validator;
+public class CategoryObservationValidation extends DataFixture {
+	
+	@Test(groups = "A.3 Conformance class: Category observation data", description = "Verify that the XML element om:result has a value that matches the content model defined by gml:ReferenceType")
+	public void CategoryObservation() {
+		//must has resultTime element
+		String hasResultTime = this.CheckXPath2("boolean(//om:resultTime)");
+		if (hasResultTime.equals("false"))
+			throw new SkipException("Not category observation.");
+		
+		List<String> href = GetResultTypeHref();
+		if (!href.contains(this.observation_type_category)) {
+			throw new SkipException("Not category data.");
+		}
+		
 		try {
-			validator = CreateValidator(entityCatalog);
-			ETSAssert.assertSchemaValid(validator, source);
-		} catch (XMLStreamException | SAXException | IOException e) {
-			// TODO Auto-generated catch block
+			List<String> results = CheckObservationTypeCategory(this.observation_type_category);
+			if (results.contains("false")) {
+				Assert.assertTrue(false,
+						"element om:result has a value that matches the content model defined by gml:ReferenceType.");
+			}else {
+				Assert.assertTrue(true,
+						"element om:result has a value that matches the content model defined by gml:ReferenceType.");
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	
-
-	
-
-	
-
-	
 
 }

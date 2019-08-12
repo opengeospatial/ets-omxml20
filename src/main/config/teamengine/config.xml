@@ -14,7 +14,19 @@
         <title>Observations and Measurements (OM)</title>
         <description>Checks om instances for conformance to OGC 10-025r1.</description>
         <BasicConformanceClasses>
-		  <conformanceClass>BasicConformanceClass</conformanceClass>
+		  <conformanceClass>GenericObservationData</conformanceClass>
+		  <conformanceClass>MeasurementData</conformanceClass>
+		  <conformanceClass>CategoryObservation</conformanceClass>
+		  <conformanceClass>CountObservation</conformanceClass>
+		  <conformanceClass>TruthObservation</conformanceClass>
+		  <conformanceClass>GeometryObservation</conformanceClass>
+		  <conformanceClass>TemporalObservation</conformanceClass>
+		  <conformanceClass>ComplexObservation</conformanceClass>
+		  <conformanceClass>ScalarObservation</conformanceClass>
+		  <conformanceClass>ArrayObservation</conformanceClass>
+		  <conformanceClass>SpatialObservation</conformanceClass>
+		  <conformanceClass>SamplingFeatureObservation</conformanceClass>
+		  <conformanceClass>SpecimenObservation</conformanceClass>		  
 		</BasicConformanceClasses>
       </suite>
       <revision>

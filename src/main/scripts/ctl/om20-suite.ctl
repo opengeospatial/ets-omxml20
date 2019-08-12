@@ -37,7 +37,6 @@
                <p>Two conformance levels are defined:</p>
                <ul>
                  <li>Level 1 (Basic Conformance Class)</li>
-                 <li>Level 2</li>
                </ul>
              </div>
              <fieldset style="background:#ccffff">
@@ -60,8 +59,7 @@
                  <label for="level">Conformance class: </label>
                  <input id="level-1" type="radio" name="level" value="1" checked="checked" />
                  <label for="level-1"> Level 1 (Basic Conformance Class)| </label>
-                 <input id="level-2" type="radio" name="level" value="2" />
-                 <label class="form-label" for="level-2"> Level 2</label>
+                 
                </p>
              </fieldset>
              <p>

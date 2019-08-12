@@ -42,32 +42,26 @@ import net.sf.saxon.s9api.DocumentBuilder;
 /**
  * Includes various tests of capability 1.
  */
-public class GenericObservationDataValidation extends DataFixture {
-
+public class SpecimenObservationValidation extends DataFixture {
+	
 	/**
-	 * A.1 Generic observation data. Verify that any XML element in the
-	 * substitution group of om:OM_Observation is well-formed and valid
+	 * A.18 Specimen data. Verify that any XML element in the substitution group
+	 * of spec:SF_Specimen is well-formed and valid
 	 */
-	@Test(groups = "A.1. Generic observation data - by various Schema References", description = "Validate the XML document using the XML schema document observation.xsd")
-	public void ObservationValidation() {
-		URL entityCatalog = this.getClass().getResource("/org/opengis/cite/om20/xsd/opengis/om/2.0/observation.xsd");
-		Source source = new DOMSource(this.testSubject);
-		Validator validator;
-		try {
-			validator = CreateValidator(entityCatalog);
+	@Test(groups = "A.18. Specimen data", description = "Validate the XML document using the XML Schema document http://schemas.opengis.net/samplingSpecimen/2.0/specimen.xsd")
+	public void SpecimenValid() {
+		if (CheckXPath2("boolean(//spec:SF_Specimen)").equals("false")) {
+			throw new SkipException("Not Specimen data.");
+		} else {
+			URL entityCatalog = this.getClass().getResource("/org/opengis/cite/om20/xsd/opengis/om/2.0/specimen.xsd");
+			Validator validator = null;
+			try {
+				validator = CreateValidator(entityCatalog);
+			} catch (XMLStreamException | SAXException | IOException e) {
+				e.printStackTrace();
+			}
+			Source source = new DOMSource(this.testSubject);
 			ETSAssert.assertSchemaValid(validator, source);
-		} catch (XMLStreamException | SAXException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-	}
-
-	
-
-	
-
-	
-
-	
-
+	}	
 }

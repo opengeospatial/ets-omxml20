@@ -8,19 +8,74 @@
     <listener class-name="org.opengis.cite.om20.TestRunListener" />
     <listener class-name="org.opengis.cite.om20.SuiteFixtureListener" />
   </listeners>
-
-  <test name="BasicConformanceClass">
+  <test name="GenericObservationData">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.GenericObservationDataValidation" />
+    </classes>
+  </test>
+  <test name="MeasurementData">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.MeasurementDataValidation" />
+    </classes>
+  </test>
+  <test name="CategoryObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.CategoryObservationValidation" />
+    </classes>
+  </test>
+  <test name="CountObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.CountObservationValidation" />
+    </classes>
+  </test>
+  <test name="TruthObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.TruthObservationValidation" />
+    </classes>
+  </test>
+  <test name="GeometryObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.GeometryObservationValidation" />
+    </classes>
+  </test>
+  <test name="TemporalObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.TemporalObservationValidation" />
+    </classes>
+  </test>
+  <test name="ComplexObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.ComplexObservationValidation" />
+    </classes>
+  </test>
+  <test name="ScalarObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.ScalarObservationValidation" />
+    </classes>
+  </test>
+  <test name="ArrayObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.ArrayObservationValidation" />
+    </classes>
+  </test>
+  <test name="SpatialObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.SpatialObservationValidation" />
+    </classes>
+  </test>
+  <test name="SamplingFeatureObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.SamplingFeatureObservationValidation" />
+    </classes>
+  </test>
+  <test name="SpecimenObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.SpecimenObservationValidation" />
+    </classes>
+  </test>
+  <!-- <test name="BasicConformanceClass">
   	<packages>
       <package name="org.opengis.cite.om20.level1" />
     </packages>
-    <!-- <classes>
-      <class name="org.opengis.cite.om20.level1.Capability1Tests" />
-      <class name="org.opengis.cite.om20.level1.SchematronTests" /> 
-    </classes>-->
-  </test>
-  <!-- <test name="Conformance Level 2">
-    <classes>
-      <class name="org.opengis.cite.om20.level2.Capability2Tests" />
-    </classes>
-  </test> -->
+  </test> -->  
 </suite>
