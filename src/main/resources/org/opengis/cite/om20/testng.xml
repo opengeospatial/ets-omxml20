@@ -63,12 +63,18 @@
       <class name="org.opengis.cite.om20.level1.SpatialObservationValidation" />
     </classes>
   </test>
+  
   <test name="SamplingFeatureObservation">
   	<classes>
       <class name="org.opengis.cite.om20.level1.SamplingFeatureObservationValidation" />
     </classes>
   </test>
-    <test name="SamplingPointObservation">
+  <test name="SpatialSamplingFeatureValidation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.SpatialSamplingFeatureValidation" />
+    </classes>
+  </test>
+  <test name="SamplingPointObservation">
   	<classes>
       <class name="org.opengis.cite.om20.level1.SamplingPointDataValidation" />
     </classes>
