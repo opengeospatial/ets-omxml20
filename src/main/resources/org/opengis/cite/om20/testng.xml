@@ -68,6 +68,26 @@
       <class name="org.opengis.cite.om20.level1.SamplingFeatureObservationValidation" />
     </classes>
   </test>
+    <test name="SamplingPointObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.SamplingPointDataValidation" />
+    </classes>
+  </test>
+  <test name="SamplingCurveObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.SamplingCurveDataValidation" />
+    </classes>
+  </test>
+  <test name="SamplingSurfaceObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.SamplingSurfaceDataValidation" />
+    </classes>
+  </test>
+  <test name="SamplingSolidObservation">
+  	<classes>
+      <class name="org.opengis.cite.om20.level1.SamplingSolidDataValidation" />
+    </classes>
+  </test>
   <test name="SpecimenObservation">
   	<classes>
       <class name="org.opengis.cite.om20.level1.SpecimenObservationValidation" />

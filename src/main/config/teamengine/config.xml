@@ -25,7 +25,12 @@
 		  <conformanceClass>ScalarObservation</conformanceClass>
 		  <conformanceClass>ArrayObservation</conformanceClass>
 		  <conformanceClass>SpatialObservation</conformanceClass>
-		  <conformanceClass>SamplingFeatureObservation</conformanceClass>
+		  <conformanceClass>SamplingFeatureObservation</conformanceClass>		  
+		  <conformanceClass>SamplingPointObservation</conformanceClass>
+		  <conformanceClass>SamplingCurveObservation</conformanceClass>
+		  <conformanceClass>SamplingSurfaceObservation</conformanceClass>
+		  <conformanceClass>SamplingSolidObservation</conformanceClass>
+		  
 		  <conformanceClass>SpecimenObservation</conformanceClass>		  
 		</BasicConformanceClasses>
       </suite>
