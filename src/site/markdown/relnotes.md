@@ -18,3 +18,7 @@ According to [Versioning of test suits](https://github.com/opengeospatial/cite/w
  * [#5](https://github.com/opengeospatial/ets-om20/issues/5) Review minimum conformance classes are present and documented
  * [#7](https://github.com/opengeospatial/ets-om20/issues/7) Wrong versioning of test in beta
  * [#6](https://github.com/opengeospatial/ets-om20/issues/6) Add conformance class configuration into the ets-om20 test
+
+## 0.4
+ * [#12](https://github.com/opengeospatial/ets-om20/issues/12) Web Browser Interface must be updated
+ * [#13](https://github.com/opengeospatial/ets-om20/issues/13) Review and update conformance classes
