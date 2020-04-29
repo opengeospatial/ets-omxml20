@@ -2,7 +2,7 @@
 
 ### Scope
 
-This test suite validates the XML instances of OM 2.0.
+This test suite validates the XML instances of version 2.0 of the OGC Observations and Measurements (O&M) conceptual model.
 
 Visit the [project documentation website](http://opengeospatial.github.io/ets-om20/)
 
