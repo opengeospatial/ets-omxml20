@@ -575,7 +575,7 @@ public class DataFixture {
 		String context = String.format("//om:OM_Observation[om:type/@xlink:href='%s']", href);
 		int count_observation = Integer.parseInt((CheckXPath2(String.format("count(%s)", context))));
 		for (int i = 1; i <= count_observation; i++) {
-			results.add(CheckXPath2(String.format("(%s/om:result/text())[%s] castable as xs:integer)", context, i)));
+			results.add(CheckXPath2(String.format("(%s/om:result/text())[%s] castable as xs:integer", context, i)));
 		}
 		return results;
 	}
