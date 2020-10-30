@@ -50,7 +50,6 @@
   <properties>
     <ets-code>om20</ets-code>
     <spec-version>2.0</spec-version>
-     <slf4jVersion>1.6.1</slf4jVersion> 
      <docker.teamengine.version>5.3</docker.teamengine.version>
   </properties>
 
@@ -75,25 +74,35 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
     </dependency>
-    <!-- <dependency>
-    	<groupId>com.helger</groupId>
-    	<artifactId>ph-schematron</artifactId>
-    	<version>4.0.0</version>
-    </dependency> -->
-    <dependency>
-    	<groupId>commons-io</groupId>
-    	<artifactId>commons-io</artifactId>
-    	<version>2.5</version>
-    </dependency>
-    <dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-api</artifactId>
-		<version>${slf4jVersion}</version>
+	<dependency>
+	  <groupId>org.testng</groupId>
+	  <artifactId>testng</artifactId>
+	  <version>6.8.8</version>
 	</dependency>
 	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-simple</artifactId>
-		<version>${slf4jVersion}</version>
+	  <groupId>net.sourceforge.saxon</groupId>
+	  <artifactId>saxon9</artifactId>
+	  <version>9.0.0.8</version>
+	</dependency>
+	<dependency>
+	  <groupId>net.sourceforge.saxon</groupId>
+	  <artifactId>saxon9-s9api</artifactId>
+	  <version>9.0.0.8</version>
+	</dependency>
+	<dependency>
+	  <groupId>xml-apis</groupId>
+	  <artifactId>xml-apis</artifactId>
+	  <version>1.4.01</version>
+	</dependency>
+	<dependency>
+	  <groupId>xerces</groupId>
+	  <artifactId>xercesImpl</artifactId>
+	  <version>2.11.0</version>
+	</dependency>
+	<dependency>
+	  <groupId>javax.ws.rs</groupId>
+	  <artifactId>jsr311-api</artifactId>
+	  <version>1.1.1</version>
 	</dependency>
   </dependencies>
 
@@ -330,4 +339,14 @@
     </site>
   </distributionManagement>
 
+  <repositories>
+    <repository>
+      <id>opengeospatial-cite</id>
+      <name>OGC CITE Repository</name>
+      <url>https://svn.opengeospatial.org/ogc-projects/cite/maven</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 </project>
