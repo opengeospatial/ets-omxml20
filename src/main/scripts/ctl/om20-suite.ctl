@@ -6,19 +6,19 @@
   xmlns:tec="java:com.occamlab.te.TECore"
   xmlns:tng="java:org.opengis.cite.om20.TestNGController">
 
-  <ctl:function name="tns:run-ets-om20">
+  <ctl:function name="tns:run-ets-omxml20">
 		<ctl:param name="testRunArgs">A Document node containing test run arguments (as XML properties).</ctl:param>
     <ctl:param name="outputDir">The directory in which the test results will be written.</ctl:param>
 		<ctl:return>The test results as a Source object (root node).</ctl:return>
-		<ctl:description>Runs the om20 ${version} test suite.</ctl:description>
+		<ctl:description>Runs the omxml20 ${version} test suite.</ctl:description>
     <ctl:code>
       <xsl:variable name="controller" select="tng:new($outputDir)" />
       <xsl:copy-of select="tng:doTestRun($controller, $testRunArgs)" />
     </ctl:code>
 	</ctl:function>
 
-   <ctl:suite name="tns:ets-om20-${version}">
-     <ctl:title>Test suite ets-om20</ctl:title>
+   <ctl:suite name="tns:ets-omxml20-${version}">
+     <ctl:title>Test suite ets-omxml20</ctl:title>
      <ctl:description>Describe scope of testing.</ctl:description>
      <ctl:starting-test>tns:Main</ctl:starting-test>
    </ctl:suite>
@@ -28,9 +28,9 @@
 	  <ctl:code>
         <xsl:variable name="form-data">
            <ctl:form method="POST" width="800" height="600" xmlns="http://www.w3.org/1999/xhtml">
-             <h2>OM 2.0 Conformance Test suite</h2>
+             <h2>OMXML 2.0 Conformance Test suite</h2>
              <div style="background:#F0F8FF" bgcolor="#F0F8FF">
-               <p>The OM 2.0 implementation under test (IUT) is checked against the following specifications:</p>
+               <p>The OMXML 2.0 implementation under test (IUT) is checked against the following specifications:</p>
                <ul>
                  <li><a href="http://portal.opengeospatial.org/files/?artifact_id=41510">Observations and Measurements - XML Implementation, Version 2.0</a></li>
                </ul>
@@ -88,7 +88,7 @@
          <xsl:value-of select="tec:getTestRunDirectory($te:core)"/>
        </xsl:variable>
        <xsl:variable name="test-results">
-        <ctl:call-function name="tns:run-ets-om20">
+        <ctl:call-function name="tns:run-ets-omxml20">
 			    <ctl:with-param name="testRunArgs" select="$test-run-props"/>
           <ctl:with-param name="outputDir" select="$testRunDir" />
 			  </ctl:call-function>
