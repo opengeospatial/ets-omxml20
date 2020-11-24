@@ -22,3 +22,10 @@ According to [Versioning of test suits](https://github.com/opengeospatial/cite/w
 ## 0.4
  * [#12](https://github.com/opengeospatial/ets-omxml20/issues/12) Web Browser Interface must be updated
  * [#13](https://github.com/opengeospatial/ets-omxml20/issues/13) Review and update conformance classes
+
+## 0.5 (2020-11-24)
+ * [#15](https://github.com/opengeospatial/ets-omxml20/issues/15) Update documentation to use "OMXML 2.0" instead of "OM 2.0"
+ * [#14](https://github.com/opengeospatial/ets-omxml20/issues/14) Update version of TEAM Engine dependency used by Docker Image
+ * [#20](https://github.com/opengeospatial/ets-omxml20/issues/20) Ensure that test fails against non O&M XML files
+ * [#16](https://github.com/opengeospatial/ets-omxml20/issues/16) Create unit tests for OMXML 2.0
+
