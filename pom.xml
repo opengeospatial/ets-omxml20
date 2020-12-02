@@ -6,13 +6,13 @@
     <version>9</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>ets-om20</artifactId>
-  <version>0.5-SNAPSHOT</version>
+  <artifactId>ets-omxml20</artifactId>
+  <version>0.6-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>Observations and Measurements (OM)</name>
+  <name>Observations and Measurements - XML Implementation (OMXML)</name>
   <description>Describe purpose of test suite.</description>
-  <url>http://opengeospatial.github.io/ets-om20/</url>
+  <url>http://opengeospatial.github.io/ets-omxml20/</url>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -25,14 +25,14 @@
     <url>http://www.opengeospatial.org/</url>
   </organization>
   <scm>
-    <connection>scm:git:https://github.com/opengeospatial/ets-om20.git</connection>
-    <developerConnection>scm:git:git@github.com:opengeospatial/ets-om20.git</developerConnection>
-    <url>https://github.com/opengeospatial/ets-om20</url>
+    <connection>scm:git:https://github.com/opengeospatial/ets-omxml20.git</connection>
+    <developerConnection>scm:git:git@github.com:opengeospatial/ets-omxml20.git</developerConnection>
+    <url>https://github.com/opengeospatial/ets-omxml20</url>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issue Tracker</system>
-    <url>https://github.com/opengeospatial/ets-om20/issues</url>
+    <url>https://github.com/opengeospatial/ets-omxml20/issues</url>
   </issueManagement>
   <developers>
     <developer>
@@ -48,9 +48,10 @@
   </developers>
 
   <properties>
-    <ets-code>om20</ets-code>
+    <ets-code>omxml20</ets-code>
     <spec-version>2.0</spec-version>
-     <docker.teamengine.version>5.3</docker.teamengine.version>
+     <slf4jVersion>1.6.1</slf4jVersion> 
+     <docker.teamengine.version>5.4</docker.teamengine.version>
   </properties>
 
   <dependencies>
@@ -330,7 +331,7 @@
     </repository>
     <site>
       <id>site</id>
-      <url>scm:git:git@github.com:opengeospatial/ets-om20.git</url>
+      <url>scm:git:git@github.com:opengeospatial/ets-omxml20.git</url>
     </site>
   </distributionManagement>
 </project>

@@ -4,15 +4,15 @@
 <organization>
   <name>OGC</name>
   <standard>
-    <name>Observations and Measurements (OM)</name>
+    <name>Observations and Measurements - XML Implementation (OMXML)</name>
     <version>
       <name>${spec-version}</name>
       <suite>
         <namespace-uri>http://www.opengis.net/cite/om20</namespace-uri>
         <prefix>tns</prefix>
-        <local-name>ets-om20-${version}</local-name>
-        <title>Observations and Measurements (OM)</title>
-        <description>Checks om instances for conformance to OGC 10-025r1.</description>
+        <local-name>ets-omxml20-${version}</local-name>
+        <title>Observations and Measurements - XML Implementation (OMXML)</title>
+        <description>Checks omxml instances for conformance to OGC 10-025r1.</description>
         <BasicConformanceClasses>
 		  <conformanceClass>GenericObservationData</conformanceClass>
 		  <conformanceClass>MeasurementData</conformanceClass>
@@ -38,9 +38,9 @@
         <name>${version}</name>
         <status>Beta</status>
         <sources>
-          <source>om20/${spec-version}/ctl</source>
+          <source>omxml20/${spec-version}/ctl</source>
         </sources>
-        <webdir>om20/${spec-version}/site</webdir>
+        <webdir>omxml20/${spec-version}/site</webdir>
       </revision>
     </version>
   </standard>

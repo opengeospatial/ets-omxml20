@@ -28,7 +28,7 @@ This test suite is based on the following OGC specification:
 None
  
 ## The test data 
-* [Samples](https://github.com/opengeospatial/ets-om20/tree/master/src/test/resources) 
+* [Samples](https://github.com/opengeospatial/ets-omxml20/tree/master/src/test/resources) 
  
  ## Release Notes  
 Release notes are available [here.](relnotes.html) 

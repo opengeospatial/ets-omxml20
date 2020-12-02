@@ -17,8 +17,8 @@
 >
 
 	<ctl:suite name="om:suite">
-		<ctl:title>OM 2.0 Compliance Test Suite</ctl:title>
-		<ctl:description>Verifies that an OM 2.0 implementation complies with the Observations and Measurements (OM) Implementation Specification.</ctl:description>
+		<ctl:title>OMXML 2.0 Compliance Test Suite</ctl:title>
+		<ctl:description>Verifies that an OMXML 2.0 implementation complies with the Observations and Measurements - XML Implementation (OMXML) Specification.</ctl:description>
 		<ctl:starting-test>om:Main</ctl:starting-test>
 	</ctl:suite>
 
@@ -26,7 +26,7 @@
 		<ctl:assertion>The schema satisfies all applicable assertions.</ctl:assertion>
 		<ctl:code>
 			<!--
-                1.)  Prompt the user to provide the url for an OM implementation.
+                1.)  Prompt the user to provide the url for an OMXML implementation.
                 2.)  Send a request to the provided url to determine if there is a response
                 3.)  If there is a response, then begin executing tests, else fail.
             -->
@@ -36,17 +36,17 @@
 			<xsl:variable name="form-values">
 				<ctl:form height="700" width="1024">
 					<body>
-						<h2>Compliance Test Suite for Observations and Measurements (OM) 2.0</h2>
+						<h2>Compliance Test Suite for Observations and Measurements - XML Implementation (OMXML) 2.0</h2>
 						<p>
-                  Please provide a URL from which a OM document can 
+                  Please provide a URL from which a OMXML document can 
                   be retrieved. Modify the URL template below to specify the 
-                  location of an OGC OM 2.0 implementation to be tested.
+                  location of an OGC OMXML 2.0 implementation to be tested.
 						</p>
 						<blockquote>
 							<table border="1" padding="4" bgcolor="#99ccff">
 								<tr>
 									<td align="left">
-										<b>OM URL:</b>
+										<b>OMXML URL:</b>
 									</td>
 									<td align="center">
 										<input name="service-url" size="128" type="text" value="" />
@@ -58,9 +58,9 @@
 					</body>
 				</ctl:form>
 			</xsl:variable>
-			<!-- Get user input:  Get the value of the OM URL that the user supplies -->
+			<!-- Get user input:  Get the value of the OMXML URL that the user supplies -->
 			<xsl:variable name="om.get.url" select="$form-values/values/value[@key='service-url']" />
-			<ctl:message>Executing tests on the OM implementation found at the following URL:  <xsl:value-of select="$om.get.url" />
+			<ctl:message>Executing tests on the OMXML implementation found at the following URL:  <xsl:value-of select="$om.get.url" />
 			</ctl:message>
 			<ctl:call-test name="om:ConformanceValidation">
 				<ctl:with-param name="serviceURL" select="$om.get.url" />
@@ -70,9 +70,9 @@
 
 	<ctl:test name="om:ConformanceValidation">
 		<ctl:param name="serviceURL" />
-		<ctl:assertion>The provided OM complies with the OM 2.0 Implementation Specification.</ctl:assertion>
+		<ctl:assertion>The provided OMXML complies with the OMXML 2.0 Implementation Specification.</ctl:assertion>
 		<ctl:code>
-			<ctl:message>Executing a request for getting the context of the provided OM from "<xsl:value-of select="$serviceURL" />"</ctl:message>
+			<ctl:message>Executing a request for getting the context of the provided OMXML from "<xsl:value-of select="$serviceURL" />"</ctl:message>
 			<xsl:variable name="response">
 				<ctl:request>
 					<ctl:url>
