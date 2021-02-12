@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.opengis.cite</groupId>
     <artifactId>ets-common</artifactId>
-    <version>4</version>
+    <version>9</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ets-omxml20</artifactId>
@@ -75,25 +75,30 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
     </dependency>
-    <!-- <dependency>
-    	<groupId>com.helger</groupId>
-    	<artifactId>ph-schematron</artifactId>
-    	<version>4.0.0</version>
-    </dependency> -->
-    <dependency>
-    	<groupId>commons-io</groupId>
-    	<artifactId>commons-io</artifactId>
-    	<version>2.5</version>
-    </dependency>
-    <dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-api</artifactId>
-		<version>${slf4jVersion}</version>
+	<dependency>
+	  <groupId>org.testng</groupId>
+	  <artifactId>testng</artifactId>
+	  <version>6.9.10</version>
 	</dependency>
 	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-simple</artifactId>
-		<version>${slf4jVersion}</version>
+	  <groupId>org.opengis.cite.saxon</groupId>
+	  <artifactId>saxon9</artifactId>
+	  <version>9.0.0.8</version>
+	</dependency>
+	<dependency>
+	  <groupId>xml-apis</groupId>
+	  <artifactId>xml-apis</artifactId>
+	  <version>1.4.01</version>
+	</dependency>
+	<dependency>
+	  <groupId>xerces</groupId>
+	  <artifactId>xercesImpl</artifactId>
+	  <version>2.11.0</version>
+	</dependency>
+	<dependency>
+	  <groupId>javax.ws.rs</groupId>
+	  <artifactId>jsr311-api</artifactId>
+	  <version>1.1.1</version>
 	</dependency>
   </dependencies>
 
@@ -329,5 +334,4 @@
       <url>scm:git:git@github.com:opengeospatial/ets-omxml20.git</url>
     </site>
   </distributionManagement>
-
 </project>
