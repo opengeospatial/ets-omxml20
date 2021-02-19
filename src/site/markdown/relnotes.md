@@ -29,3 +29,8 @@ According to [Versioning of test suits](https://github.com/opengeospatial/cite/w
  * [#20](https://github.com/opengeospatial/ets-omxml20/issues/20) Ensure that test fails against non O&M XML files
  * [#16](https://github.com/opengeospatial/ets-omxml20/issues/16) Create unit tests for OMXML 2.0
 
+## 1.0 (2021-02-19)
+ * [#27](https://github.com/opengeospatial/ets-omxml20/issues/27) Prepare release 1.0
+ * [#26](https://github.com/opengeospatial/ets-omxml20/pull/26) Bump xercesImpl from 2.11.0 to 2.12.1
+ * [#18](https://github.com/opengeospatial/ets-omxml20/issues/18) Cleanup dependencies
+
