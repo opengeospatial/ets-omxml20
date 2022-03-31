@@ -34,3 +34,8 @@ According to [Versioning of test suits](https://github.com/opengeospatial/cite/w
  * [#26](https://github.com/opengeospatial/ets-omxml20/pull/26) Bump xercesImpl from 2.11.0 to 2.12.1
  * [#18](https://github.com/opengeospatial/ets-omxml20/issues/18) Cleanup dependencies
 
+## 1.1 (2022-03-31)
+ * [#24](https://github.com/opengeospatial/ets-omxml20/issues/24) Add template to get an XML/JSON response via rest endpoint
+ * [#30](https://github.com/opengeospatial/ets-omxml20/pull/30) Bump xercesImpl from 2.12.1 to 2.12.2
+ * [#28](https://github.com/opengeospatial/ets-omxml20/pull/28) Set Docker TEAM Engine version to 5.4.1
+
