@@ -43,15 +43,16 @@ import net.sf.saxon.s9api.DocumentBuilder;
  * Includes various tests of capability 1.
  */
 public class ScalarObservationValidation extends DataFixture {
-	
+
 	/**
-	 * A.9 SWE scalar observation data. Verify that the XML element om:result
-	 * contains a concrete sub-element in the substitution group
-	 * swe:AbstractScalarComponent containing an inline value
+	 * A.9 SWE scalar observation data. Verify that the XML element om:result contains a
+	 * concrete sub-element in the substitution group swe:AbstractScalarComponent
+	 * containing an inline value
 	 */
-	@Test(groups = "A.9. SWE scalar observation data", description = "Validate the XML document using the Schematron document http://schemas.opengis.net/om/2.0/SWEScalarObservation.sch")
+	@Test(groups = "A.9. SWE scalar observation data",
+			description = "Validate the XML document using the Schematron document http://schemas.opengis.net/om/2.0/SWEScalarObservation.sch")
 	public void ResultSWEscalar() {
-		
+
 		List<String> href = GetResultTypeHref();
 		if (!href.contains(this.observation_type_swe_simple)) {
 			throw new SkipException("Not SWE scalar observation.");
@@ -67,13 +68,16 @@ public class ScalarObservationValidation extends DataFixture {
 			String result = SchemaElement(candidateNode, nodeName, schemaFile);
 			if (result.equals("true") && inline_value.equals("true")) {
 				final_result = "true";
-			} else {
+			}
+			else {
 				final_result = "false";
 			}
 			Assert.assertTrue(final_result.equals("true"),
 					"XML element om:result must contain an element in the substitution group headed by swe:AbstractSimpleComponent with an inline value.");
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 }

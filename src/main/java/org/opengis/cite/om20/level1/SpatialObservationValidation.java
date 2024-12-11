@@ -43,17 +43,17 @@ import net.sf.saxon.s9api.DocumentBuilder;
  * Includes various tests of capability 1.
  */
 public class SpatialObservationValidation extends DataFixture {
-	
+
 	/**
-	 * A.11 Spatial observation data. Verify that the observation has exactly
-	 * one sampling geometry encoded as XML element om:parameter/om:NamedValue
-	 * in an observation, and that its sub-element om:name has an xlink:href
-	 * attribute with the value
+	 * A.11 Spatial observation data. Verify that the observation has exactly one sampling
+	 * geometry encoded as XML element om:parameter/om:NamedValue in an observation, and
+	 * that its sub-element om:name has an xlink:href attribute with the value
 	 * http://www.opengis.net/def/paramname/OGC-OM/2.0/samplingGeometry, and its
 	 * sub-element om:value contains a sub-element in the substitution group of
 	 * gml:AbstractGeometry
 	 */
-	@Test(groups = "A.11. Spatial observation data", description = "Validate the XML document using the Schematron document http://schemas.opengis.net/om/2.0/spatialObservation.sch")
+	@Test(groups = "A.11. Spatial observation data",
+			description = "Validate the XML document using the Schematron document http://schemas.opengis.net/om/2.0/spatialObservation.sch")
 	public void SpatialParameter() {
 		// According to "spatialObservation.sch", A spatial observation shall
 		// have exactly one sampling geometry
@@ -61,9 +61,10 @@ public class SpatialObservationValidation extends DataFixture {
 		if (CheckXPath2("boolean(//*[om:resultTime]/om:parameter)").equals("false")) {
 			throw new SkipException("Not Spatial observation data.");
 		}
-		
-		if (CheckXPath2("boolean(//om:parameter/om:NamedValue/om:name[@xlink:href = 'http://www.opengis.net/req/omxml/2.0/data/samplingGeometry'] | /om:parameter/om:NamedValue[om:name/@xlink:href= 'http://www.opengis.net/req/omxml/2.0/data/samplingGeometry'])"
-						).equals("false")) {
+
+		if (CheckXPath2(
+				"boolean(//om:parameter/om:NamedValue/om:name[@xlink:href = 'http://www.opengis.net/req/omxml/2.0/data/samplingGeometry'] | /om:parameter/om:NamedValue[om:name/@xlink:href= 'http://www.opengis.net/req/omxml/2.0/data/samplingGeometry'])")
+			.equals("false")) {
 			throw new SkipException("Not Spatial observation data.");
 		}
 		// ---Test rule 1---
@@ -87,11 +88,13 @@ public class SpatialObservationValidation extends DataFixture {
 		String nodeName = "gml:AbstractGeometry";
 		if (candidateNode.contains("XdmEmptySequence")) {
 			result_2 = "false";
-		} else {
+		}
+		else {
 			try {
 				File schemaFile = this.GetFileViaResourcePath(this.Resource_GML_Path);
 				result_2 = SchemaElement(candidateNode, nodeName, schemaFile);
-			} catch (SaxonApiException e) {
+			}
+			catch (SaxonApiException e) {
 				e.printStackTrace();
 			}
 		}
@@ -100,7 +103,8 @@ public class SpatialObservationValidation extends DataFixture {
 		String final_result = "";
 		if (result_1.equals("true") && result_2.equals("true")) {
 			final_result = "true";
-		} else {
+		}
+		else {
 			final_result = "false";
 		}
 		Assert.assertTrue(final_result.equals("true"),
@@ -110,4 +114,5 @@ public class SpatialObservationValidation extends DataFixture {
 						+ "	And, the XML element om:value in the om:parameter/om:NamedValue element which carries the sampling "
 						+ "	geometry MUST have a value of type gml:AbstractGeometry");
 	}
+
 }

@@ -43,32 +43,39 @@ import net.sf.saxon.s9api.DocumentBuilder;
  * Includes various tests of capability 1.
  */
 public class TruthObservationValidation extends DataFixture {
-	
-	@Test(groups = "A.5 Conformance class: Truth observation data", description = "Verify that the XML element om:result has a value that matches the content model defined by xs:boolean.")
+
+	/**
+	 * <p>
+	 * TruthObservation.
+	 * </p>
+	 */
+	@Test(groups = "A.5 Conformance class: Truth observation data",
+			description = "Verify that the XML element om:result has a value that matches the content model defined by xs:boolean.")
 	public void TruthObservation() {
-		//must has resultTime element
+		// must has resultTime element
 		String hasResultTime = this.CheckXPath2("boolean(//om:resultTime)");
 		if (hasResultTime.equals("false"))
 			throw new SkipException("Not truth observation.");
-		
+
 		List<String> href = GetResultTypeHref();
 		if (!href.contains(this.observation_type_truth)) {
 			throw new SkipException("Not truth data.");
-		}		
-		
+		}
+
 		try {
 			List<String> results = this.CheckObservationTypeTruth(this.observation_type_truth);
 			if (results.contains("false")) {
 				Assert.assertTrue(false,
 						"element om:result has a value that matches the content model defined by xs:boolean.");
-			}else {
+			}
+			else {
 				Assert.assertTrue(true,
 						"element om:result has a value that matches the content model defined by xs:boolean.");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 
 }

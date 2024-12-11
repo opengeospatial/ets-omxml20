@@ -43,22 +43,20 @@ import net.sf.saxon.s9api.DocumentBuilder;
  * Includes various tests of capability 1.
  */
 public class ArrayObservationValidation extends DataFixture {
-	
-
 
 	/**
-	 * A.10 SWE array observation data. Verify that the XML element om:result
-	 * contains a sub-element swe:DataArray, swe:Matrix or swe:DataStream
-	 * containing inline values.
+	 * A.10 SWE array observation data. Verify that the XML element om:result contains a
+	 * sub-element swe:DataArray, swe:Matrix or swe:DataStream containing inline values.
 	 */
-	@Test(groups = "A.10. SWE array observation data", description = "Validate the XML document using the Schematron document http://schemas.opengis.net/om/2.0/SWEArrayObservation.sch")
+	@Test(groups = "A.10. SWE array observation data",
+			description = "Validate the XML document using the Schematron document http://schemas.opengis.net/om/2.0/SWEArrayObservation.sch")
 	public void ResultSWEBlock() {
 
 		List<String> href = GetResultTypeHref();
 		if (!href.contains(this.observation_type_swe_array)) {
 			throw new SkipException("Not SWE array observation.");
 		}
-		
+
 		String candidateNode = CheckXPath2("//om:result/*[1]/name()");
 		String nodeName_1 = "swe:DataArray";
 		String nodeName_2 = "swe:Matrix";
@@ -74,13 +72,16 @@ public class ArrayObservationValidation extends DataFixture {
 			if ((result_1.equals("true") || result_2.equals("true") || result_3.equals("true"))
 					&& inline_value.equals("true")) {
 				final_result = "true";
-			} else {
+			}
+			else {
 				final_result = "false";
 			}
 			Assert.assertTrue(final_result.equals("true"),
 					"result must contain an element in the substitution group headed by swe:DataArray, swe:Matrix or swe:DataStream and with inline values.");
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 }

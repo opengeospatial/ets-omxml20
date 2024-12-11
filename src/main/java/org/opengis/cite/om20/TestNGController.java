@@ -25,19 +25,16 @@ import org.w3c.dom.Document;
 public class TestNGController implements TestSuiteController {
 
 	private TestRunExecutor executor;
+
 	private Properties etsProperties = new Properties();
 
 	/**
 	 * A convenience method to facilitate test development.
-	 *
-	 * @param args
-	 *            Test run arguments (optional). The first argument must refer
-	 *            to an XML properties file containing the expected set of test
-	 *            run arguments. If no argument is supplied, the file located at
-	 *            ${user.home}/test-run-props.xml will be used.
-	 * @throws Exception
-	 *             If the test run cannot be executed (usually due to
-	 *             unsatisfied pre-conditions).
+	 * @param args Test run arguments (optional). The first argument must refer to an XML
+	 * properties file containing the expected set of test run arguments. If no argument
+	 * is supplied, the file located at ${user.home}/test-run-props.xml will be used.
+	 * @throws java.lang.Exception If the test run cannot be executed (usually due to
+	 * unsatisfied pre-conditions).
 	 */
 	public static void main(String[] args) throws Exception {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -45,7 +42,8 @@ public class TestNGController implements TestSuiteController {
 		File xmlArgs = null;
 		if (args.length > 0) {
 			xmlArgs = (args[0].startsWith("file:")) ? new File(URI.create(args[0])) : new File(args[0]);
-		} else {
+		}
+		else {
 			String homeDir = System.getProperty("user.home");
 			xmlArgs = new File(homeDir, "test-run-props.xml");
 		}
@@ -59,8 +57,8 @@ public class TestNGController implements TestSuiteController {
 	}
 
 	/**
-	 * Default constructor uses the location given by the "user.home" system
-	 * property as the root output directory.
+	 * Default constructor uses the location given by the "user.home" system property as
+	 * the root output directory.
 	 */
 	public TestNGController() {
 		this(new File(System.getProperty("user.home")).toURI().toString());
@@ -68,17 +66,15 @@ public class TestNGController implements TestSuiteController {
 
 	/**
 	 * Construct a controller that writes results to the given output directory.
-	 * 
-	 * @param outputDirUri
-	 *            A file URI that specifies the location of the directory in
-	 *            which test results will be written. It will be created if it
-	 *            does not exist.
+	 * @param outputDirUri A file URI that specifies the location of the directory in
+	 * which test results will be written. It will be created if it does not exist.
 	 */
 	public TestNGController(String outputDirUri) {
 		InputStream is = getClass().getResourceAsStream("ets.properties");
 		try {
 			this.etsProperties.load(is);
-		} catch (IOException ex) {
+		}
+		catch (IOException ex) {
 			TestSuiteLogger.log(Level.WARNING, "Unable to load ets.properties. " + ex.getMessage());
 		}
 		URL tngSuite = TestNGController.class.getResource("testng.xml");
@@ -89,21 +85,25 @@ public class TestNGController implements TestSuiteController {
 		this.executor = new TestNGExecutor(tngSuite.toString(), resultsDir.getAbsolutePath(), false);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String getCode() {
 		return etsProperties.getProperty("ets-code");
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String getVersion() {
 		return etsProperties.getProperty("ets-version");
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public String getTitle() {
 		return etsProperties.getProperty("ets-title");
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public Source doTestRun(Document testRunArgs) throws Exception {
 		validateTestRunArgs(testRunArgs);
@@ -111,14 +111,11 @@ public class TestNGController implements TestSuiteController {
 	}
 
 	/**
-	 * Validates the given set of test run arguments. The test run is aborted if
-	 * any checks fail.
-	 *
-	 * @param testRunArgs
-	 *            A DOM Document containing a set of XML properties (key-value
-	 *            pairs).
-	 * @throws Exception
-	 *             If any arguments are missing or invalid for some reason.
+	 * Validates the given set of test run arguments. The test run is aborted if any
+	 * checks fail.
+	 * @param testRunArgs A DOM Document containing a set of XML properties (key-value
+	 * pairs).
+	 * @throws Exception If any arguments are missing or invalid for some reason.
 	 */
 	void validateTestRunArgs(Document testRunArgs) throws Exception {
 		if (null == testRunArgs || testRunArgs.getElementsByTagName("entry").getLength() == 0) {
@@ -131,4 +128,5 @@ public class TestNGController implements TestSuiteController {
 			throw new Exception(String.format("Missing argument: '%s' must be present.", TestRunArg.IUT));
 		}
 	}
+
 }
