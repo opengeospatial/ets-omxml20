@@ -167,22 +167,30 @@
         </plugin>
       </plugins>
 	</pluginManagement>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-				<excludes>
-					<exclude>**/*.zip</exclude>
-					<exclude>**/*.xsd</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<directory>src/main/javadoc</directory>
-				<filtering>true</filtering>
-				<targetPath>doc/${ets-code}/${project.version}</targetPath>
-			</resource>
-		</resources>
-	</build>
+	<resources>
+      <resource>
+    		<directory>src/main/resources</directory>
+    		<filtering>true</filtering>
+    		<excludes>
+    			<exclude>**/*.zip</exclude>
+    			<exclude>**/*.xsd</exclude>
+    		</excludes>
+    	</resource>
+    	<resource>
+    		<directory>src/main/resources</directory>
+    		<filtering>false</filtering>
+    		<includes>
+    			<include>**/*.zip</include>
+    			<include>**/*.xsd</include>
+    		</includes>
+    	</resource>
+    	<resource>
+    		<directory>src/main/javadoc</directory>
+    		<filtering>true</filtering>
+    		<targetPath>doc/${ets-code}/${project.version}</targetPath>
+    	</resource>
+    </resources>
+  </build>
 
   <profiles>    
     <profile>
