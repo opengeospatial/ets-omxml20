@@ -2,9 +2,7 @@ package org.opengis.cite.om20.level1;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -12,44 +10,24 @@ import java.util.logging.Level;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
-
-import org.opengis.cite.om20.ETSAssert;
-import org.opengis.cite.om20.ErrorMessage;
-import org.opengis.cite.om20.ErrorMessageKeys;
-import org.opengis.cite.om20.Namespaces;
-import org.opengis.cite.om20.SuiteAttribute;
-import org.opengis.cite.om20.TestRunArg;
-import org.opengis.cite.om20.util.XMLUtils;
-import org.opengis.cite.om20.util.NamespaceBindings;
-import org.opengis.cite.om20.util.NamespaceResolver;
-import org.opengis.cite.om20.util.TestSuiteLogger;
-import org.opengis.cite.om20.util.URIUtils;
-import org.opengis.cite.validation.SchematronValidator;
-import org.testng.Assert;
-import org.testng.ITestContext;
-import org.testng.SkipException;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-import org.testng.log4testng.Logger;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import javax.xml.transform.Source;
-import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import javax.xml.xpath.XPathFactoryConfigurationException;
 
-import net.sf.saxon.Configuration;
-//import net.sf.saxon.lib.NamespaceConstant;
-import net.sf.saxon.om.DocumentInfo;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.trans.XPathException;
-//import net.sf.saxon.xpath.XPathFactoryImpl;
+import org.opengis.cite.om20.Namespaces;
+import org.opengis.cite.om20.SuiteAttribute;
+import org.opengis.cite.om20.TestRunArg;
+import org.opengis.cite.om20.util.NamespaceResolver;
+import org.opengis.cite.om20.util.TestSuiteLogger;
+import org.opengis.cite.validation.SchematronValidator;
+import org.testng.ITestContext;
+import org.testng.annotations.BeforeClass;
+import org.testng.log4testng.Logger;
+import org.w3c.dom.NodeList;
 
 //import org.apache.xpath.jaxp.XPathFactoryImpl;
 /**

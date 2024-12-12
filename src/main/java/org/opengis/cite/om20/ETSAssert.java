@@ -1,10 +1,9 @@
 package org.opengis.cite.om20;
 
 import java.net.URL;
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
+
 import javax.xml.namespace.QName;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMResult;
@@ -14,10 +13,10 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+
 import org.opengis.cite.om20.util.NamespaceBindings;
 import org.opengis.cite.om20.util.TestSuiteLogger;
 import org.opengis.cite.om20.util.XMLUtils;
-import org.opengis.cite.om20.util.ValidationUtils;
 import org.opengis.cite.validation.SchematronValidator;
 import org.opengis.cite.validation.ValidationErrorHandler;
 import org.testng.Assert;

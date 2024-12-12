@@ -5,9 +5,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import javax.xml.namespace.NamespaceContext;
+
 import org.opengis.cite.om20.Namespaces;
-import org.w3c.dom.Document;
 
 /**
  * Provides namespace bindings for evaluating XPath 1.0 expressions using the JAXP XPath

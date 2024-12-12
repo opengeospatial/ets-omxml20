@@ -4,13 +4,13 @@ import java.util.Iterator;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
+
 import org.w3c.dom.Document;
 
 /**
  * <p>
  * NamespaceResolver class.
  * </p>
- *
  */
 public class NamespaceResolver implements NamespaceContext {
 

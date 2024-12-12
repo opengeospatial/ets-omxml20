@@ -1,8 +1,5 @@
 package org.opengis.cite.om20;
 
-import com.occamlab.te.spi.executors.TestRunExecutor;
-import com.occamlab.te.spi.executors.testng.TestNGExecutor;
-import com.occamlab.te.spi.jaxrs.TestSuiteController;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,14 +7,20 @@ import java.net.URI;
 import java.net.URL;
 import java.util.Properties;
 import java.util.logging.Level;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
+
 import org.opengis.cite.om20.util.TestSuiteLogger;
 import org.w3c.dom.Document;
+
+import com.occamlab.te.spi.executors.TestRunExecutor;
+import com.occamlab.te.spi.executors.testng.TestNGExecutor;
+import com.occamlab.te.spi.jaxrs.TestSuiteController;
 
 /**
  * Main test run controller oversees execution of TestNG test suites.

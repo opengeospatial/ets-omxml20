@@ -21,8 +21,6 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 
 import org.apache.xerces.util.XMLCatalogResolver;
-import org.opengis.cite.om20.util.TestSuiteLogger;
-import org.opengis.cite.om20.util.ValidationUtils;
 import org.opengis.cite.om20.Namespaces;
 import org.opengis.cite.validation.SchematronValidator;
 import org.opengis.cite.validation.XmlSchemaCompiler;

@@ -21,13 +21,13 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
 
 import org.apache.xerces.xs.XSModel;
+//import org.opengis.cite.iso19136.general.GML32;
+import org.opengis.cite.om20.Namespaces;
 import org.opengis.cite.om20.SuiteAttribute;
 import org.opengis.cite.om20.util.NamespaceBindings;
 import org.opengis.cite.om20.util.ValidationUtils;
 import org.opengis.cite.om20.util.XMLUtils;
 import org.opengis.cite.validation.XmlSchemaCompiler;
-//import org.opengis.cite.iso19136.general.GML32;
-import org.opengis.cite.om20.Namespaces;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
