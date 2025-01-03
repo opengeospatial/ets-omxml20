@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <parent>
     <groupId>org.opengis.cite</groupId>
@@ -74,24 +75,24 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
     </dependency>
-	<dependency>
-	  <groupId>org.testng</groupId>
-	  <artifactId>testng</artifactId>
-	</dependency>
-	<dependency>
-	  <groupId>org.opengis.cite.saxon</groupId>
-	  <artifactId>saxon9</artifactId>
-	</dependency>
-	<dependency>
-	  <groupId>xerces</groupId>
-	  <artifactId>xercesImpl</artifactId>
-	  <exclusions>
-	  	<exclusion>
-	  		<groupId>xml-apis</groupId>
-	  		<artifactId>xml-apis</artifactId>
-	  	</exclusion>
-	  </exclusions>
-	</dependency>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.opengis.cite.saxon</groupId>
+      <artifactId>saxon9</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.connectors</groupId>
       <artifactId>jersey-apache-connector</artifactId>
@@ -139,25 +140,25 @@
           </configuration>
         </plugin>
       </plugins>
-	</pluginManagement>
+    </pluginManagement>
 
-	<resources>
+    <resources>
       <resource>
-    		<directory>src/main/resources</directory>
-    		<filtering>true</filtering>
-    		<excludes>
-    			<exclude>**/*.zip</exclude>
-    			<exclude>**/*.xsd</exclude>
-    		</excludes>
-    	</resource>
-    	<resource>
-    		<directory>src/main/resources</directory>
-    		<filtering>false</filtering>
-    		<includes>
-    			<include>**/*.zip</include>
-    			<include>**/*.xsd</include>
-    		</includes>
-    	</resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <excludes>
+          <exclude>**/*.zip</exclude>
+          <exclude>**/*.xsd</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <includes>
+          <include>**/*.zip</include>
+          <include>**/*.xsd</include>
+        </includes>
+      </resource>
     </resources>
   </build>
 
