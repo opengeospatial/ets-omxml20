@@ -1,6 +1,6 @@
 # OMXML 2.0 Release Notes
 
-According to [Versioning of test suits](https://github.com/opengeospatial/cite/wiki/ETS-Names-and-Versioning#versioning-of-test-suites), the version of the OMXML 2.0 should be revised to 0.x to indicate its beta status.
+According to [Versioning of test suites](https://github.com/opengeospatial/cite/wiki/ETS-Names-and-Versioning#versioning-of-test-suites), the version of the OMXML 2.0 should be revised to 0.x to indicate its beta status.
 
 ## ~~1.0~~ 0.1 
   * First release - all the conformance classes.
