@@ -39,3 +39,9 @@ According to [Versioning of test suits](https://github.com/opengeospatial/cite/w
  * [#30](https://github.com/opengeospatial/ets-omxml20/pull/30) Bump xercesImpl from 2.12.1 to 2.12.2
  * [#28](https://github.com/opengeospatial/ets-omxml20/pull/28) Set Docker TEAM Engine version to 5.4.1
 
+## 1.2 (2025-01-08)
+
+Attention: Java 17 and Tomcat 10.1 are required.
+
+ * [#31](https://github.com/opengeospatial/ets-omxml20/issues/31) Migrate test suite to TEAM Engine 6 (Java 17)
+
