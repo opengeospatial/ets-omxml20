@@ -158,6 +158,11 @@
           <include>**/*.xsd</include>
         </includes>
       </resource>
+      <resource>
+        <directory>src/main/javadoc</directory>
+        <filtering>true</filtering>
+        <targetPath>doc/${ets-code}/${project.version}</targetPath>
+      </resource>
     </resources>
   </build>
 
